@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { MapContainer, GeoJSON, TileLayer, Popup } from "react-leaflet";
+import { MapContainer, GeoJSON, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import data from "../data/countries.json";
 import TextBox from "./TextBox";
 import { Countries } from "../data/Countries";
 import LegendCard from "./LegendCard";
 
-const Map = ({ country, setCountry, allCountryData, restriction }) => {
+const Map = ({ country, setCountry, restriction, allCountryData }) => {
   // States
-  // const [country, setCountry] = useState("");
   const [hover, setHover] = useState("");
-  const [countryName, setCountryName] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState("");
 
   useEffect(() => {
     if (country != "") {
@@ -18,22 +17,12 @@ const Map = ({ country, setCountry, allCountryData, restriction }) => {
         return c.ISO_A3 === country;
       })[0].name;
       console.log(name);
-      setCountryName(name);
+      setSelectedCountry(name);
     }
   }, [country]);
 
   // returns the relevant color code depending on the restriction level
   const getColour = (indicator, value, threeLetter) => {
-    // if there is a country selected and it's not the current country, set it to grey
-    if (country !== "" && country !== threeLetter) {
-      return "#888888";
-    }
-
-    // no data
-    if (value == null) {
-      return "#c4c5c6";
-    }
-
     if (indicator === "C2") {
       // value 0 to 3
       switch (value) {
@@ -61,8 +50,31 @@ const Map = ({ country, setCountry, allCountryData, restriction }) => {
           return "#cc0000";
       }
     }
+    return "red";
   };
 
+  const perc2color = (perc, threeLetter) => {
+    // if there is a country selected and it's not the current country, set it to grey
+    if (country !== "" && country !== threeLetter) {
+      return "#888888";
+    }
+    // no data
+    if (perc == null) {
+      return "#c4c5c6";
+    }
+    let r = 0;
+    let g = 0;
+    let b = 0;
+    if (perc < 50) {
+      r = 255;
+      g = Math.round(5.1 * perc);
+    } else {
+      g = 255;
+      r = Math.round(510 - 5.1 * perc);
+    }
+    const h = r * 0x10000 + g * 0x100 + b * 0x1;
+    return "#" + ("000000" + h.toString(16)).slice(-6);
+  };
   return (
     <>
       <MapContainer
@@ -75,32 +87,17 @@ const Map = ({ country, setCountry, allCountryData, restriction }) => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {data.features.map((feature, i) => {
-          let result = null;
-          if (allCountryData) {
-            const resultObject = allCountryData.Items.filter((item) => {
-              // console.log(item, "item");
-              return item.uuid.S === feature.properties.ISO_A3;
-            })[0];
-            if (resultObject) {
-              result =
-                resultObject[
-                  restriction === "#it"
-                    ? "C8_International travel controls"
-                    : restriction
-                ].S;
-              if (result === "nan") {
-                result = null;
-              } else {
-                result = parseInt(result);
-              }
-            }
+          const ISO = feature.properties.ISO_A3;
+          let val = null;
+          if (allCountryData && allCountryData[ISO]) {
+            val = allCountryData[ISO].stringency;
           }
 
           return (
             <GeoJSON
               key={i}
               style={{
-                fillColor: getColour("C4", result, feature.properties.ISO_A3),
+                fillColor: perc2color(val, feature.properties.ISO_A3),
                 weight: 1,
                 fillOpacity: 0.65,
                 color: "grey",
@@ -109,10 +106,10 @@ const Map = ({ country, setCountry, allCountryData, restriction }) => {
               eventHandlers={{
                 click: (e) => {
                   if (country === feature.properties.ISO_A3) {
-                    setCountryName("");
+                    setSelectedCountry("");
                     setCountry("");
                   } else {
-                    setCountryName(feature.properties.ADMIN);
+                    setSelectedCountry(feature.properties.ADMIN);
                     setCountry(feature.properties.ISO_A3);
                   }
                   // setSelected(feature.properties.ISO_A3);
@@ -134,7 +131,7 @@ const Map = ({ country, setCountry, allCountryData, restriction }) => {
           alignItems: "center",
         }}
       >
-        <TextBox name={countryName} />
+        <TextBox name={selectedCountry} />
       </div>
     </>
   );

@@ -9,100 +9,55 @@ import Box from "@mui/material/Box";
 import Tabs from "./components/Tabs";
 
 function App() {
+  // three letter ISO alpha 3 country code
   const [country, setCountry] = useState("");
+  // dropdown tabs
   const [restriction, setRestriction] = useState(Restrictions[1].value);
-  // for tabs at the bottom
+  // for individual data for each country
   const [countryData, setCountryData] = useState(null);
-  // for the map
-  const [allCountryData, setAllCountryData] = useState("");
+  // overall stringency data for the world
+  const [allCountryData, setAllCountryData] = useState(null);
+  const [date, setDate] = useState("2022-01-31");
 
   // individual country data when searched or clicked
   useEffect(async () => {
     if (!country) {
       return;
     }
-    const body = {
-      operation: "read",
-      tableName: "dynotableuniq",
-      payload: {
-        uuid: country,
-        month: 23,
-        list_of_attributes: [
-          "C2_Flag",
-          "C3_Flag",
-          "C4_Flag",
-          "C7_Flag",
-          "#it",
-          "H6_Flag",
-        ],
-      },
-    };
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    };
     try {
       const r = await fetch(
-        "https://75av8duz8i.execute-api.ap-southeast-2.amazonaws.com/Stage2/getcountry",
-        options
+        `https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/actions/${country}/2022-01-08`
       );
       const data = await r.json();
       if (!r.ok) {
         throw new Error(data.error);
       }
-      setCountryData(JSON.parse(data.body));
+      console.log(data);
+      setCountryData(data);
     } catch (err) {
       console.err(err);
     }
   }, [country]);
 
-  // all country data when restriction is selected
+  // all country data
   useEffect(async () => {
-    if (!restriction) {
+    if (!date) {
       return;
     }
-    const body = {
-      operation: "read",
-      tableName: "dynotableuniq",
-      payload: {
-        "#u": "",
-        month: 23,
-        list_of_attributes: [
-          "C2_Flag",
-          "C3_Flag",
-          "C4_Flag",
-          "C7_Flag",
-          "#it",
-          "H6_Flag",
-        ],
-      },
-    };
-
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    };
     try {
       const r = await fetch(
-        "https://75av8duz8i.execute-api.ap-southeast-2.amazonaws.com/AllCountriesStage/getallcountries",
-        options
+        `https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/date-range/${date}/${date}`
       );
-      const data = await r.json();
       if (!r.ok) {
-        throw new Error(data.error);
+        throw new Error(r.error);
       }
-      console.log(data, "c8");
-      setAllCountryData(data.body);
+      const res = await r.json();
+      console.log(res.data[date], "c8");
+      setAllCountryData(res.data[date]);
     } catch (err) {
       console.err(err);
     }
-  }, [restriction]);
+  }, [date]);
 
   return (
     <div className="App">
@@ -115,7 +70,7 @@ function App() {
           alignItems: "center",
         }}
       >
-        <div id="searchbar" style={{ width: "100%" }}>
+        <div id="searchbar" style={{ width: "80vw" }}>
           <SearchBar setCountry={setCountry} setRestriction={setRestriction} />
         </div>
         <div>
@@ -123,21 +78,11 @@ function App() {
             country={country}
             setCountry={setCountry}
             allCountryData={allCountryData}
-            restriction={
-              restriction === "#it"
-                ? "C8_International travel controls"
-                : restriction
-            }
+            restriction={restriction}
           />
         </div>
         <div style={{ paddingTop: "20px" }}>
-          <LegendCard
-            restriction={
-              restriction === "#it"
-                ? "C8_International travel controls"
-                : restriction
-            }
-          />
+          <LegendCard restriction={restriction} />
         </div>
         <div>
           <Tabs countryData={countryData} />

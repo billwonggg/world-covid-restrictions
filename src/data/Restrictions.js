@@ -1,11 +1,11 @@
 export const Restrictions = [
   {
     name: "International Travel Controls",
-    value: "#it",
+    value: "C8",
   },
-  { name: "Gathering Restrictions", value: "C4_Flag" },
-  { name: "Workplace Closing", value: "C2_Flag" },
-  { name: "Facial Coverings", value: "H6_Flag" },
+  { name: "Gathering Restrictions", value: "C4" },
+  { name: "Workplace Closing", value: "C2" },
+  { name: "Facial Coverings", value: "H6" },
 ];
 
 const noRules = [
@@ -41,19 +41,19 @@ export const Travel = noRules.concat([
 export const Gathering = noRules.concat([
   {
     col: "#00d4ff",
-    desc: "Restrictions with 1000+ people",
+    desc: "Restrictions on 1000+ people",
   },
   {
     col: "#ffb800",
-    desc: "Restrictions with 101-1000 people",
+    desc: "Restrictions on 101-1000 people",
   },
   {
     col: "#ff8000",
-    desc: "Restrictions with 11-100 people",
+    desc: "Restrictions on 11-100 people",
   },
   {
     col: "#cc0000",
-    desc: "Restrictions with 10 people or less",
+    desc: "Restrictions on 10 people or less",
   },
 ]);
 

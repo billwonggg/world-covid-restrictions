@@ -1,108 +1,70 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import Map from "./components/Map";
-import SearchBar from "./components/SearchBar";
 import { Restrictions } from "./data/Restrictions";
+import Map from "./components/Map";
+import Header from "./components/Header";
 import LegendCard from "./components/LegendCard";
-// import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Tabs from "./components/Tabs";
+// import Grid from "@mui/material/Grid";
 
 function App() {
+  // three letter ISO alpha 3 country code (current country selected)
   const [country, setCountry] = useState("");
-  const [restriction, setRestriction] = useState(Restrictions[1].value);
-  // for tabs at the bottom
+  // dropdown tabs
+  const [restriction, setRestriction] = useState(Restrictions[0].value);
+  // for individual data for each country
   const [countryData, setCountryData] = useState(null);
-  // for the map
-  const [allCountryData, setAllCountryData] = useState("");
+  // overall stringency data for the world
+  const [allCountryData, setAllCountryData] = useState(null);
+  // current date selected
+  const [date, setDate] = useState(() => {
+    const day = new Date();
+    // we search up data a week ago
+    day.setDate(day.getDate() - 5);
+    return day.toLocaleDateString("en-CA");
+  });
 
   // individual country data when searched or clicked
   useEffect(async () => {
-    if (!country) {
+    if (date === "") {
       return;
     }
-    const body = {
-      operation: "read",
-      tableName: "dynotableuniq",
-      payload: {
-        uuid: country,
-        month: 23,
-        list_of_attributes: [
-          "C2_Flag",
-          "C3_Flag",
-          "C4_Flag",
-          "C7_Flag",
-          "#it",
-          "H6_Flag",
-        ],
-      },
-    };
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    };
+    console.log(date, "date app");
     try {
       const r = await fetch(
-        "https://75av8duz8i.execute-api.ap-southeast-2.amazonaws.com/Stage2/getcountry",
-        options
+        `https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/actions/${country}/2022-01-08`
       );
       const data = await r.json();
       if (!r.ok) {
         throw new Error(data.error);
       }
-      setCountryData(JSON.parse(data.body));
+      console.log(data.policyActions);
+      setCountryData(data.policyActions);
     } catch (err) {
       console.err(err);
     }
   }, [country]);
 
-  // all country data when restriction is selected
+  // all country data (stringency index)
   useEffect(async () => {
-    if (!restriction) {
+    if (!date) {
       return;
     }
-    const body = {
-      operation: "read",
-      tableName: "dynotableuniq",
-      payload: {
-        "#u": "",
-        month: 23,
-        list_of_attributes: [
-          "C2_Flag",
-          "C3_Flag",
-          "C4_Flag",
-          "C7_Flag",
-          "#it",
-          "H6_Flag",
-        ],
-      },
-    };
-
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    };
     try {
       const r = await fetch(
-        "https://75av8duz8i.execute-api.ap-southeast-2.amazonaws.com/AllCountriesStage/getallcountries",
-        options
+        `https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/date-range/${date}/${date}`
       );
-      const data = await r.json();
       if (!r.ok) {
-        throw new Error(data.error);
+        throw new Error(r.error);
       }
-      console.log(data, "c8");
-      setAllCountryData(data.body);
+      const res = await r.json();
+      console.log(res.data[date], "c8");
+      setAllCountryData(res.data[date]);
     } catch (err) {
       console.err(err);
     }
-  }, [restriction]);
+  }, [date]);
 
   return (
     <div className="App">
@@ -115,29 +77,27 @@ function App() {
           alignItems: "center",
         }}
       >
-        <div id="searchbar" style={{ width: "100%" }}>
-          <SearchBar setCountry={setCountry} setRestriction={setRestriction} />
+        <div id="searchbar" style={{ width: "80vw" }}>
+          <Header
+            country={country}
+            setCountry={setCountry}
+            restriction={restriction}
+            setRestriction={setRestriction}
+            date={date}
+            setDate={setDate}
+          />
         </div>
         <div>
           <Map
             country={country}
             setCountry={setCountry}
+            countryData={countryData}
             allCountryData={allCountryData}
-            restriction={
-              restriction === "#it"
-                ? "C8_International travel controls"
-                : restriction
-            }
+            restriction={restriction}
           />
         </div>
         <div style={{ paddingTop: "20px" }}>
-          <LegendCard
-            restriction={
-              restriction === "#it"
-                ? "C8_International travel controls"
-                : restriction
-            }
-          />
+          <LegendCard restriction={restriction} />
         </div>
         <div>
           <Tabs countryData={countryData} />

@@ -24,16 +24,16 @@ export default function LegendCard({ restriction }) {
 
   useEffect(() => {
     switch (restriction) {
-      case "C8_International travel controls":
+      case "C8":
         setRules(Travel);
         break;
-      case "C2_Flag":
+      case "C2":
         setRules(Workplace);
         break;
-      case "C4_Flag":
+      case "C4":
         setRules(Gathering);
         break;
-      case "H6_Flag":
+      case "H6":
         setRules(FaceCovering);
         break;
     }
@@ -50,13 +50,9 @@ export default function LegendCard({ restriction }) {
     >
       {rules.map((rule, i) => {
         return (
-          <Grid item xs={4}>
+          <Grid key={i} item xs={4}>
             <ListItemIcon>
-              {rule.col !== "" ? (
-                <StarIcon style={{ fill: rule.col }} />
-              ) : (
-                <></>
-              )}
+              {rule.col && <StarIcon style={{ fill: rule.col }} />}
             </ListItemIcon>
             {rule.desc}
           </Grid>

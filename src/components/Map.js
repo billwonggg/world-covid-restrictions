@@ -25,18 +25,9 @@ const Map = ({
       const name = Countries.filter((c) => {
         return c.ISO_A3 === country;
       })[0].name;
-      console.log(name);
       setSelectedCountry(name);
     }
   }, [country]);
-
-  useEffect(() => {
-    if (hover == null) {
-      return;
-    }
-    hover.target.options.style.color = "black";
-    hover.target.options.style.weight = 2;
-  }, [hover]);
 
   // returns the relevant color code depending on the restriction level
   const idxToPerc = (indicator, value) => {
@@ -87,7 +78,6 @@ const Map = ({
     const h = r * 0x10000 + g * 0x100 + b * 0x1;
     return "#" + ("000000" + h.toString(16)).slice(-6);
   };
-  // console.log(countryData, "cd");
 
   return (
     <>
@@ -109,7 +99,6 @@ const Map = ({
             // there is a selected country
             for (let i = 0; i < countryData.length; i++) {
               if (countryData[i].policy_type_code === restriction) {
-                console.log(countryData[i].policyvalue_actual, "filter");
                 val = idxToPerc(
                   countryData[i].policy_type_code,
                   countryData[i].policyvalue_actual
@@ -139,15 +128,14 @@ const Map = ({
                     setSelectedCountry(NAME);
                     setCountry(ISO);
                   }
-                  console.log(ISO);
                 },
-                mouseover: (e) => {
-                  // console.log(e);
-                  e.target.openPopup();
-                },
-                mouseout: (e) => {
-                  e.target.closePopup();
-                },
+                // mouseover: (e) => {
+                //   // console.log(e);
+                //   e.target.openPopup();
+                // },
+                // mouseout: (e) => {
+                //   e.target.closePopup();
+                // },
               }}
             >
               <Popup>
@@ -159,15 +147,17 @@ const Map = ({
         <Legend map={map} />
       </MapContainer>
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <TextBox name={selectedCountry} />
-      </div>
+      {selectedCountry && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <TextBox name={selectedCountry} />
+        </div>
+      )}
     </>
   );
 };

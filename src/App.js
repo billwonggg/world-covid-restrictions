@@ -1,29 +1,36 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import Map from "./components/Map";
-import SearchBar from "./components/SearchBar";
 import { Restrictions } from "./data/Restrictions";
+import Map from "./components/Map";
+import Header from "./components/Header";
 import LegendCard from "./components/LegendCard";
-// import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Tabs from "./components/Tabs";
+// import Grid from "@mui/material/Grid";
 
 function App() {
-  // three letter ISO alpha 3 country code
+  // three letter ISO alpha 3 country code (current country selected)
   const [country, setCountry] = useState("");
   // dropdown tabs
-  const [restriction, setRestriction] = useState(Restrictions[1].value);
+  const [restriction, setRestriction] = useState(Restrictions[0].value);
   // for individual data for each country
   const [countryData, setCountryData] = useState(null);
   // overall stringency data for the world
   const [allCountryData, setAllCountryData] = useState(null);
-  const [date, setDate] = useState("2022-01-31");
+  // current date selected
+  const [date, setDate] = useState(() => {
+    const day = new Date();
+    // we search up data a week ago
+    day.setDate(day.getDate() - 5);
+    return day.toLocaleDateString("en-CA");
+  });
 
   // individual country data when searched or clicked
   useEffect(async () => {
-    if (!country) {
+    if (date === "") {
       return;
     }
+    console.log(date, "date app");
     try {
       const r = await fetch(
         `https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/actions/${country}/2022-01-08`
@@ -32,14 +39,14 @@ function App() {
       if (!r.ok) {
         throw new Error(data.error);
       }
-      console.log(data);
-      setCountryData(data);
+      console.log(data.policyActions);
+      setCountryData(data.policyActions);
     } catch (err) {
       console.err(err);
     }
   }, [country]);
 
-  // all country data
+  // all country data (stringency index)
   useEffect(async () => {
     if (!date) {
       return;
@@ -71,12 +78,20 @@ function App() {
         }}
       >
         <div id="searchbar" style={{ width: "80vw" }}>
-          <SearchBar setCountry={setCountry} setRestriction={setRestriction} />
+          <Header
+            country={country}
+            setCountry={setCountry}
+            restriction={restriction}
+            setRestriction={setRestriction}
+            date={date}
+            setDate={setDate}
+          />
         </div>
         <div>
           <Map
             country={country}
             setCountry={setCountry}
+            countryData={countryData}
             allCountryData={allCountryData}
             restriction={restriction}
           />

@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { MapContainer, GeoJSON, TileLayer } from "react-leaflet";
+import { MapContainer, GeoJSON, TileLayer, Popup, Marker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import data from "../data/countries.json";
+import center from "../data/center";
 import TextBox from "./TextBox";
 import { Countries } from "../data/Countries";
 import LegendCard from "./LegendCard";
 
-const Map = ({ country, setCountry, restriction, allCountryData }) => {
+const Map = ({
+  country,
+  setCountry,
+  countryData,
+  allCountryData,
+  restriction,
+}) => {
   // States
-  const [hover, setHover] = useState("");
+  const [hover, setHover] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState("");
 
   useEffect(() => {
@@ -21,39 +28,40 @@ const Map = ({ country, setCountry, restriction, allCountryData }) => {
     }
   }, [country]);
 
-  // returns the relevant color code depending on the restriction level
-  const getColour = (indicator, value, threeLetter) => {
-    if (indicator === "C2") {
-      // value 0 to 3
-      switch (value) {
-        case 0:
-          return "#21b955";
-        case 1:
-          return "#00d4ff";
-        case 2:
-          return "#ff8000";
-        case 3:
-          return "#cc0000";
-      }
-    } else if (indicator === "C4" || indicator === "C8" || indicator === "H6") {
-      // value 0 to 4
-      switch (value) {
-        case 0:
-          return "#21b955";
-        case 1:
-          return "#00d4ff";
-        case 2:
-          return "#ffb800";
-        case 3:
-          return "#ff8000";
-        case 4:
-          return "#cc0000";
-      }
+  useEffect(() => {
+    if (hover == null) {
+      return;
     }
-    return "red";
+    hover.target.options.style.color = "black";
+    hover.target.options.style.weight = 2;
+  }, [hover]);
+
+  // returns the relevant color code depending on the restriction level
+  const idxToPerc = (indicator, value) => {
+    switch (indicator) {
+      // values between 0 and 2
+      case "C3":
+      case "C5":
+        return 100 * (value / 2.0);
+      // values between 0 and 3
+      case "C1":
+      case "C2":
+      case "C6":
+      case "H2":
+        return 100 * (value / 3.0);
+      // values between 0 and 4
+      case "C4":
+      case "C8":
+      case "H6":
+        return 100 * (value / 4.0);
+      // values between 0 and 5
+      case "H7":
+        return 100 * (value / 5.0);
+    }
+    return 0;
   };
 
-  const perc2color = (perc, threeLetter) => {
+  const percToColor = (perc, threeLetter) => {
     // if there is a country selected and it's not the current country, set it to grey
     if (country !== "" && country !== threeLetter) {
       return "#888888";
@@ -62,6 +70,8 @@ const Map = ({ country, setCountry, restriction, allCountryData }) => {
     if (perc == null) {
       return "#c4c5c6";
     }
+    // gradient from green (0) to red (100)
+    perc = 100 - perc;
     let r = 0;
     let g = 0;
     let b = 0;
@@ -75,6 +85,8 @@ const Map = ({ country, setCountry, restriction, allCountryData }) => {
     const h = r * 0x10000 + g * 0x100 + b * 0x1;
     return "#" + ("000000" + h.toString(16)).slice(-6);
   };
+  // console.log(countryData, "cd");
+
   return (
     <>
       <MapContainer
@@ -88,38 +100,57 @@ const Map = ({ country, setCountry, restriction, allCountryData }) => {
         />
         {data.features.map((feature, i) => {
           const ISO = feature.properties.ISO_A3;
+          const NAME = feature.properties.ADMIN;
           let val = null;
-          if (allCountryData && allCountryData[ISO]) {
+          if (country !== "" && countryData != null) {
+            // there is a selected country
+            for (let i = 0; i < countryData.length; i++) {
+              if (countryData[i].policy_type_code === restriction) {
+                console.log(countryData[i].policyvalue_actual, "filter");
+                val = idxToPerc(
+                  countryData[i].policy_type_code,
+                  countryData[i].policyvalue_actual
+                );
+              }
+            }
+          } else if (allCountryData && allCountryData[ISO]) {
             val = allCountryData[ISO].stringency;
           }
-
+          const color = percToColor(val, ISO);
           return (
             <GeoJSON
               key={i}
               style={{
-                fillColor: perc2color(val, feature.properties.ISO_A3),
+                fillColor: color,
                 weight: 1,
                 fillOpacity: 0.65,
                 color: "grey",
               }}
               data={feature}
               eventHandlers={{
-                click: (e) => {
-                  if (country === feature.properties.ISO_A3) {
+                click: () => {
+                  if (country === ISO) {
                     setSelectedCountry("");
                     setCountry("");
                   } else {
-                    setSelectedCountry(feature.properties.ADMIN);
-                    setCountry(feature.properties.ISO_A3);
+                    setSelectedCountry(NAME);
+                    setCountry(ISO);
                   }
-                  // setSelected(feature.properties.ISO_A3);
-                  console.log(feature.properties.ISO_A3);
+                  console.log(ISO);
                 },
-                mouseover: () => {
-                  setHover(feature.properties.ADMIN);
+                mouseover: (e) => {
+                  // console.log(e);
+                  e.target.openPopup();
+                },
+                mouseout: (e) => {
+                  e.target.closePopup();
                 },
               }}
-            />
+            >
+              <Popup>
+                <h1>{NAME}</h1>
+              </Popup>
+            </GeoJSON>
           );
         })}
       </MapContainer>

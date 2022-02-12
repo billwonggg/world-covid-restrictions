@@ -5,7 +5,8 @@ import data from "../data/countries.json";
 import center from "../data/center";
 import TextBox from "./TextBox";
 import { Countries } from "../data/Countries";
-import LegendCard from "./LegendCard";
+import Legend from "./Legend";
+// import LegendCard from "./LegendCard";
 
 const Map = ({
   country,
@@ -15,11 +16,12 @@ const Map = ({
   restriction,
 }) => {
   // States
+  const [map, setMap] = useState(null);
   const [hover, setHover] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState("");
 
   useEffect(() => {
-    if (country != "") {
+    if (country !== "") {
       const name = Countries.filter((c) => {
         return c.ISO_A3 === country;
       })[0].name;
@@ -90,9 +92,10 @@ const Map = ({
   return (
     <>
       <MapContainer
-        style={{ height: "60vh", width: "80vw" }}
+        style={{ height: "60vh", width: "90vw", maxWidth: "2000px" }}
         zoom={2}
         center={[51.505, -0.09]}
+        whenCreated={setMap}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -153,6 +156,7 @@ const Map = ({
             </GeoJSON>
           );
         })}
+        <Legend map={map} />
       </MapContainer>
 
       <div

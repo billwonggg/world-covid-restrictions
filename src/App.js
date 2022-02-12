@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Restrictions } from "./data/Restrictions";
 import Map from "./components/Map";
 import Header from "./components/Header";
-import LegendCard from "./components/LegendCard";
+// import LegendCard from "./components/LegendCard";
 import Box from "@mui/material/Box";
 import Tabs from "./components/Tabs";
 // import Grid from "@mui/material/Grid";
@@ -96,9 +96,9 @@ function App() {
             restriction={restriction}
           />
         </div>
-        <div style={{ paddingTop: "20px" }}>
+        {/* <div style={{ paddingTop: "20px" }}>
           <LegendCard restriction={restriction} />
-        </div>
+        </div> */}
         <div>
           <Tabs countryData={countryData} />
         </div>

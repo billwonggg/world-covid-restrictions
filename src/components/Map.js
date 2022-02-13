@@ -1,42 +1,49 @@
 import React, { useState, useEffect } from "react";
-import { MapContainer, GeoJSON, TileLayer, Popup, Marker } from "react-leaflet";
+import { MapContainer, GeoJSON, TileLayer, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import data from "../data/countries.json";
-import center from "../data/center";
-import TextBox from "./TextBox";
 import { Countries } from "../data/Countries";
 import Legend from "./Legend";
-// import LegendCard from "./LegendCard";
 
 const Map = ({
   country,
   setCountry,
+  countryName,
+  setCountryName,
   countryData,
   allCountryData,
   restriction,
 }) => {
   // States
   const [map, setMap] = useState(null);
-  const [hover, setHover] = useState(null);
-  const [selectedCountry, setSelectedCountry] = useState("");
+  // const [hover, setHover] = useState(null);
 
+  // latitude and longitude for the popup to show
+  const [latlng, setLatLng] = useState(null);
   useEffect(() => {
-    if (country !== "") {
-      const name = Countries.filter((c) => {
-        return c.ISO_A3 === country;
-      })[0].name;
-      console.log(name);
-      setSelectedCountry(name);
+    // get the latlng for the popup and full name of country
+    let latitude = null,
+      longitude = null,
+      name = null;
+    for (let i = 0; i < Countries.length; i++) {
+      if (country == Countries[i].ISO_A3) {
+        latitude = Countries[i].center_lat;
+        longitude = Countries[i].center_lng;
+        name = Countries[i].name;
+        break;
+      }
     }
-  }, [country]);
-
-  useEffect(() => {
-    if (hover == null) {
+    if (name) {
+      setCountryName(name);
+    }
+    if (latitude == null) {
+      // no valid coordinates
+      setLatLng(null);
       return;
     }
-    hover.target.options.style.color = "black";
-    hover.target.options.style.weight = 2;
-  }, [hover]);
+    setLatLng({ lat: latitude, lng: longitude });
+    setCountryName(name);
+  }, [country]);
 
   // returns the relevant color code depending on the restriction level
   const idxToPerc = (indicator, value) => {
@@ -87,8 +94,8 @@ const Map = ({
     const h = r * 0x10000 + g * 0x100 + b * 0x1;
     return "#" + ("000000" + h.toString(16)).slice(-6);
   };
-  // console.log(countryData, "cd");
 
+  console.log(countryData, "cd");
   return (
     <>
       <MapContainer
@@ -109,7 +116,6 @@ const Map = ({
             // there is a selected country
             for (let i = 0; i < countryData.length; i++) {
               if (countryData[i].policy_type_code === restriction) {
-                console.log(countryData[i].policyvalue_actual, "filter");
                 val = idxToPerc(
                   countryData[i].policy_type_code,
                   countryData[i].policyvalue_actual
@@ -120,6 +126,7 @@ const Map = ({
             val = allCountryData[ISO].stringency;
           }
           const color = percToColor(val, ISO);
+
           return (
             <GeoJSON
               key={i}
@@ -133,41 +140,35 @@ const Map = ({
               eventHandlers={{
                 click: () => {
                   if (country === ISO) {
-                    setSelectedCountry("");
+                    setCountryName("");
                     setCountry("");
                   } else {
-                    setSelectedCountry(NAME);
+                    setCountryName(NAME);
                     setCountry(ISO);
                   }
-                  console.log(ISO);
                 },
                 mouseover: (e) => {
-                  // console.log(e);
-                  e.target.openPopup();
+                  // console.log(e.latlng);
+                  // e.target.overrideStyle({
+                  //   color: "black",
+                  // });
+                  // e.target.openPopup();
                 },
                 mouseout: (e) => {
-                  e.target.closePopup();
+                  // e.target.closePopup();
+                  // L.geoJSON.resetStyle(e.target);
                 },
               }}
-            >
-              <Popup>
-                <h1>{NAME}</h1>
-              </Popup>
-            </GeoJSON>
+            ></GeoJSON>
           );
         })}
+        {latlng && (
+          <Popup position={latlng}>
+            <strong>{countryName}</strong>
+          </Popup>
+        )}
         <Legend map={map} />
       </MapContainer>
-
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <TextBox name={selectedCountry} />
-      </div>
     </>
   );
 };

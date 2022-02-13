@@ -1,16 +1,18 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
 import { Restrictions } from "./data/Restrictions";
-import Map from "./components/Map";
-import Header from "./components/Header";
-// import LegendCard from "./components/LegendCard";
 import Box from "@mui/material/Box";
-import Tabs from "./components/Tabs";
+import Header from "./components/Header";
+import Map from "./components/Map";
+import TextBox from "./components/TextBox";
+import InfoTabs from "./components/InfoTabs";
 // import Grid from "@mui/material/Grid";
 
 function App() {
   // three letter ISO alpha 3 country code (current country selected)
   const [country, setCountry] = useState("");
+  // full name of selected country
+  const [countryName, setCountryName] = useState("");
   // dropdown tabs
   const [restriction, setRestriction] = useState(Restrictions[0].value);
   // for individual data for each country
@@ -25,29 +27,25 @@ function App() {
     return day.toLocaleDateString("en-CA");
   });
 
-  // individual country data when searched or clicked
-  useEffect(async () => {
-    if (date === "") {
+  const individualAPI = async () => {
+    if (country === "" || !date) {
       return;
     }
-    console.log(date, "date app");
     try {
       const r = await fetch(
-        `https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/actions/${country}/2022-01-08`
+        `https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/actions/${country}/${date}`
       );
       const data = await r.json();
       if (!r.ok) {
         throw new Error(data.error);
       }
-      console.log(data.policyActions);
       setCountryData(data.policyActions);
     } catch (err) {
       console.err(err);
     }
-  }, [country]);
+  };
 
-  // all country data (stringency index)
-  useEffect(async () => {
+  const allAPI = async () => {
     if (!date) {
       return;
     }
@@ -59,11 +57,21 @@ function App() {
         throw new Error(r.error);
       }
       const res = await r.json();
-      console.log(res.data[date], "c8");
       setAllCountryData(res.data[date]);
     } catch (err) {
       console.err(err);
     }
+  };
+
+  // individual country data when searched or clicked
+  useEffect(() => {
+    individualAPI();
+  }, [country]);
+
+  // all country data (stringency index)
+  useEffect(() => {
+    individualAPI();
+    allAPI();
   }, [date]);
 
   return (
@@ -77,31 +85,39 @@ function App() {
           alignItems: "center",
         }}
       >
-        <div id="searchbar" style={{ width: "80vw" }}>
+        <div id="header">
           <Header
             country={country}
             setCountry={setCountry}
-            restriction={restriction}
-            setRestriction={setRestriction}
+            // countryName={countryName}
+            // setCountryName={setCountryName}
             date={date}
             setDate={setDate}
           />
         </div>
+
         <div>
           <Map
             country={country}
             setCountry={setCountry}
+            countryName={countryName}
+            setCountryName={setCountryName}
             countryData={countryData}
             allCountryData={allCountryData}
             restriction={restriction}
           />
         </div>
-        {/* <div style={{ paddingTop: "20px" }}>
-          <LegendCard restriction={restriction} />
-        </div> */}
-        <div>
-          <Tabs countryData={countryData} />
-        </div>
+
+        {country && (
+          <div id="tabs">
+            <TextBox name={countryName} date={date} />
+            <InfoTabs
+              countryData={countryData}
+              restriction={restriction}
+              setRestriction={setRestriction}
+            />
+          </div>
+        )}
       </Box>
     </div>
   );

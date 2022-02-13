@@ -1,10 +1,10 @@
 import React from "react";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
+// import OutlinedInput from "@mui/material/OutlinedInput";
+// import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import FormHelperText from "@mui/material/FormHelperText";
-import Select from "@mui/material/Select";
+// import FormControl from "@mui/material/FormControl";
+// import FormHelperText from "@mui/material/FormHelperText";
+// import Select from "@mui/material/Select";
 import { DatePicker, LocalizationProvider } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { TextField } from "@mui/material";
@@ -12,14 +12,18 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { Countries } from "../data/Countries";
 
-export default function SearchBar({ country, setCountry, date, setDate }) {
+export default function SearchBar({
+  country,
+  setCountry,
+  // countryName,
+  // setCountryName,
+  date,
+  setDate,
+}) {
   // set country name
   const handleCountryChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    console.log(value);
-    setCountry(value);
+    console.log(event.target.value);
+    setCountry(event.target.value);
   };
 
   return (
@@ -56,33 +60,24 @@ export default function SearchBar({ country, setCountry, date, setDate }) {
             </LocalizationProvider>
           </Grid>
 
-          <Grid item xs={5} justifyContent="center" alignItems="center">
-            <FormControl sx={{ m: 1, width: "100%" }}>
-              <InputLabel id="country-name-label">Country</InputLabel>
-              <TextField
-                variant="outlined"
-                label="Country"
-                fullWidth
-                select
-                // placeholder="outlined"
-                onChange={handleCountryChange}
-                input={<OutlinedInput label="Name" />}
-              >
-                {Countries.map((country) => (
-                  <MenuItem key={country.ISO_A3} value={country.ISO_A3}>
-                    {country.name}
-                  </MenuItem>
-                ))}
-              </TextField>
-              {/* <Select
-                labelId="country-name-label"
-                id="country-name"
-                multiple
-                value={country}
-                onChange={handleCountryChange}
-                input={<OutlinedInput label="Name" />}
-              ></Select> */}
-            </FormControl>
+          <Grid item xs={5} m={3} justifyContent="center" alignItems="center">
+            {/* <FormControl sx={{ m: 1, width: "100%" }}> */}
+            {/* <InputLabel id="country-name-label">Country</InputLabel> */}
+            <TextField
+              variant="outlined"
+              label="Country"
+              fullWidth
+              select
+              value={country}
+              onChange={handleCountryChange}
+              // input={<OutlinedInput label="Name" />}
+            >
+              {Countries.map((c) => (
+                <MenuItem key={c.ISO_A3} value={c.ISO_A3}>
+                  {c.name}
+                </MenuItem>
+              ))}
+            </TextField>
           </Grid>
         </Grid>
       </Box>

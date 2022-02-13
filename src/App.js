@@ -1,16 +1,18 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
 import { Restrictions } from "./data/Restrictions";
-import Map from "./components/Map";
-import Header from "./components/Header";
-// import LegendCard from "./components/LegendCard";
 import Box from "@mui/material/Box";
+import Header from "./components/Header";
+import Map from "./components/Map";
+import TextBox from "./components/TextBox";
 import InfoTabs from "./components/InfoTabs";
 // import Grid from "@mui/material/Grid";
 
 function App() {
   // three letter ISO alpha 3 country code (current country selected)
   const [country, setCountry] = useState("");
+  // full name of selected country
+  const [countryName, setCountryName] = useState("");
   // dropdown tabs
   const [restriction, setRestriction] = useState(Restrictions[0].value);
   // for individual data for each country
@@ -87,6 +89,8 @@ function App() {
           <Header
             country={country}
             setCountry={setCountry}
+            // countryName={countryName}
+            // setCountryName={setCountryName}
             date={date}
             setDate={setDate}
           />
@@ -96,6 +100,8 @@ function App() {
           <Map
             country={country}
             setCountry={setCountry}
+            countryName={countryName}
+            setCountryName={setCountryName}
             countryData={countryData}
             allCountryData={allCountryData}
             restriction={restriction}
@@ -104,6 +110,7 @@ function App() {
 
         {country && (
           <div id="tabs">
+            <TextBox name={countryName} date={date} />
             <InfoTabs
               countryData={countryData}
               restriction={restriction}

@@ -4,7 +4,6 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import { Tabs } from "@mui/material";
 import { Restrictions } from "../data/Restrictions";
 
 // Returns the description depending on the restriction and level
@@ -80,12 +79,11 @@ const getText = (r, val) => {
 
 export default function InfoTabs({ countryData, restriction, setRestriction }) {
   const handleChange = (e, newValue) => {
-    console.log(newValue);
     setRestriction(newValue);
   };
-  console.log(countryData);
+  // console.log(countryData);
   return (
-    <Box sx={{ m: 2, width: "100%", typography: "body1" }}>
+    <Box sx={{ width: "100%", typography: "body1" }}>
       <TabContext value={restriction}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <TabList
@@ -111,7 +109,11 @@ export default function InfoTabs({ countryData, restriction, setRestriction }) {
             }
           }
 
-          return <TabPanel value={r.value}>{getText(r.value, val)}</TabPanel>;
+          return (
+            <TabPanel key={i} value={r.value}>
+              {getText(r.value, val)}
+            </TabPanel>
+          );
         })}
       </TabContext>
     </Box>

@@ -15,7 +15,9 @@
 #tabs {
   width: 80vw;
   min-width: 350px;
+  margin-top: 20px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }

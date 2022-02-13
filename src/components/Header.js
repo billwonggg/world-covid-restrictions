@@ -12,15 +12,8 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { Countries } from "../data/Countries";
 
-export default function SearchBar({
-  country,
-  setCountry,
-  // countryName,
-  // setCountryName,
-  date,
-  setDate,
-}) {
-  // set country name
+export default function SearchBar({ country, setCountry, date, setDate }) {
+  // set country ISO code when clicked
   const handleCountryChange = (event) => {
     console.log(event.target.value);
     setCountry(event.target.value);

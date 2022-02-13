@@ -95,7 +95,8 @@ const Map = ({
     return "#" + ("000000" + h.toString(16)).slice(-6);
   };
 
-  console.log(countryData, "cd");
+  // console.log(allCountryData);
+  // console.log(countryData, "cd");
   return (
     <>
       <MapContainer

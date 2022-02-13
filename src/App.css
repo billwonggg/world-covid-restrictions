@@ -12,7 +12,8 @@
   min-width: 350px;
 }
 
-#tabs {
+#tabs,
+#description {
   width: 80vw;
   min-width: 350px;
   margin-top: 20px;
@@ -20,4 +21,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+#description a {
+  text-decoration: none;
+  color: rgb(64, 128, 224);
+}
+
+#description a:hover {
+  text-decoration: underline;
 }

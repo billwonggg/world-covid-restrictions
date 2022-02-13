@@ -4,8 +4,8 @@ import { Restrictions } from "./data/Restrictions";
 import Box from "@mui/material/Box";
 import Header from "./components/Header";
 import Map from "./components/Map";
-import TextBox from "./components/TextBox";
 import InfoTabs from "./components/InfoTabs";
+import Description from "./components/Description";
 // import Grid from "@mui/material/Grid";
 
 function App() {
@@ -89,8 +89,6 @@ function App() {
           <Header
             country={country}
             setCountry={setCountry}
-            // countryName={countryName}
-            // setCountryName={setCountryName}
             date={date}
             setDate={setDate}
           />
@@ -107,11 +105,18 @@ function App() {
             restriction={restriction}
           />
         </div>
-
+        {/* show description only when no country is selected */}
+        {country === "" && (
+          <div id="description">
+            <Description />
+          </div>
+        )}
+        {/* show tabs only when a country is selected */}
         {country && (
           <div id="tabs">
-            <TextBox name={countryName} date={date} />
             <InfoTabs
+              countryName={countryName}
+              date={date}
               countryData={countryData}
               restriction={restriction}
               setRestriction={setRestriction}

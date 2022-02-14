@@ -26,7 +26,7 @@ const Map = ({
       longitude = null,
       name = null;
     for (let i = 0; i < Countries.length; i++) {
-      if (country == Countries[i].ISO_A3) {
+      if (country === Countries[i].ISO_A3) {
         latitude = Countries[i].center_lat;
         longitude = Countries[i].center_lng;
         name = Countries[i].name;
@@ -66,8 +66,9 @@ const Map = ({
       // values between 0 and 5
       case "H7":
         return 100 * (value / 5.0);
+      default:
+        return 0;
     }
-    return 0;
   };
 
   const percToColor = (perc, threeLetter) => {
@@ -100,7 +101,7 @@ const Map = ({
   return (
     <>
       <MapContainer
-        style={{ height: "60vh", width: "90vw", maxWidth: "2000px" }}
+        style={{ height: "55vh", width: "90vw", maxWidth: "2000px" }}
         zoom={2}
         center={[51.505, -0.09]}
         whenCreated={setMap}
@@ -148,17 +149,8 @@ const Map = ({
                     setCountry(ISO);
                   }
                 },
-                mouseover: (e) => {
-                  // console.log(e.latlng);
-                  // e.target.overrideStyle({
-                  //   color: "black",
-                  // });
-                  // e.target.openPopup();
-                },
-                mouseout: (e) => {
-                  // e.target.closePopup();
-                  // L.geoJSON.resetStyle(e.target);
-                },
+                mouseover: (e) => {},
+                mouseout: (e) => {},
               }}
             ></GeoJSON>
           );

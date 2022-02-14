@@ -7,7 +7,6 @@ import Map from "./components/Map";
 import InfoTabs from "./components/InfoTabs";
 import Description from "./components/Description";
 import Footer from "./components/Footer";
-// import Grid from "@mui/material/Grid";
 
 function App() {
   // three letter ISO alpha 3 country code (current country selected)
@@ -125,7 +124,9 @@ function App() {
           </div>
         )}
       </Box>
-      {/* <Footer /> */}
+      <div id="footer">
+        <Footer />
+      </div>
     </div>
   );
 }

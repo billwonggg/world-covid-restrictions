@@ -2,15 +2,14 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div
-      style={{
-        textAlign: "center",
-        position: "absolute",
-        bottom: "0",
-        width: "100%",
-      }}
-    >
-      Bill Wong
+    <div>
+      Made by Bill Wong. Source code on{" "}
+      <a
+        href="https://github.com/billwonggg/world-covid-restrictions"
+        target="_blank"
+      >
+        GitHub
+      </a>
     </div>
   );
 };

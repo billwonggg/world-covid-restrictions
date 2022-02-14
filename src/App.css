@@ -1,5 +1,9 @@
 .App {
   min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+  display: block;
+  padding-bottom: 20px;
 }
 
 .leaflet-container {
@@ -23,11 +27,21 @@
   align-items: center;
 }
 
-#description a {
+a {
   text-decoration: none;
   color: rgb(64, 128, 224);
 }
 
-#description a:hover {
+a:hover {
   text-decoration: underline;
+}
+
+#footer {
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  padding: 3px;
+  width: 100%;
+  background-color: whitesmoke;
+  color: rgb(90, 90, 90);
 }

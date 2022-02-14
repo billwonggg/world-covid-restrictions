@@ -11,7 +11,7 @@
 > #### Here are some of my responsibilities during the bootcamp: <br>
 >
 > - #### Led the frontend team: delegated tasks, initiated discussions, reviewed code, merged all files, helped team members debug and test code.
-> - #### Created the entire interactive map component: clickable countries, country outlines and popups with Leaflet and GeoJSON, dynamic color scheme and legend reflective of the restriction levels.
+> - #### Implemented the entire interactive map component: clickable countries, country outlines and popups with Leaflet and GeoJSON, dynamic color scheme and legend reflective of the restriction levels.
 > - #### Connected the frontend to the backend AWS API Gateway with asynchronous POST requests.
 > - #### Processed the JSON data from the backend and integrated it into the map and information tabs with React States and Hooks.
 > - #### Worked closely with the UI/UX design group to design the general website layout which is most feasible to implement.
@@ -20,8 +20,15 @@
 
 #### The data in the website is from the [Oxford COVID-19 Government Response Tracker (OxCGRT)](https://github.com/OxCGRT/covid-policy-tracker), Blavatnik School of Government, University of Oxford. <br><br>
 
-> ### This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
->
+### **Desktop Preview**:
+
+![Home Page](./images/all.png)
+![Selected Country](./images/select.png)
+
+<br>
+
+### This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
 > ### In the project directory, you can run:
 >
 > - #### `npm install`

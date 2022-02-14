@@ -6,11 +6,9 @@
 
 #### The website uses an interactive map and GUI to help users gather relevant information about overall restrictions for all countries along with specific rules such as international travel controls for each country.
 
-<br>
+#### Tools used: _React.js, Material UI, React-Leaflet, AWS Gateway, AWS Lambda, AWS DynamoDB_
 
-#### Tools used: React.js, Material UI, React-Leaflet, AWS Gateway, AWS Lambda, AWS DynamoDB
-
-> ### Here are some of my responsibilities during the bootcamp: <br>
+> #### Here are some of my responsibilities during the bootcamp: <br>
 >
 > - #### Led the frontend team: delegated tasks, initiated discussions, reviewed code, merged all files, helped team members debug and test code.
 > - #### Created the entire interactive map component: clickable countries, country outlines and popups with Leaflet and GeoJSON, dynamic color scheme and legend reflective of the restriction levels.

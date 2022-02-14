@@ -66,13 +66,13 @@ function App() {
   // individual country data when searched or clicked
   useEffect(() => {
     individualAPI();
-  }, [country]);
+  }, [country]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // all country data (stringency index)
   useEffect(() => {
     individualAPI();
     allAPI();
-  }, [date]);
+  }, [date]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="App">

@@ -43,7 +43,7 @@ const Map = ({
     }
     setLatLng({ lat: latitude, lng: longitude });
     setCountryName(name);
-  }, [country]);
+  }, [country]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // returns the relevant color code depending on the restriction level
   const idxToPerc = (indicator, value) => {

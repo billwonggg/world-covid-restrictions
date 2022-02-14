@@ -7,6 +7,7 @@ const Footer = () => {
       <a
         href="https://github.com/billwonggg/world-covid-restrictions"
         target="_blank"
+        rel="noreferrer"
       >
         GitHub
       </a>

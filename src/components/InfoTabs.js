@@ -30,8 +30,9 @@ const getIndicator = (r, val) => {
     // values between 0 and 5
     case "H7":
       return `${val} / 5`;
+    default:
+      return;
   }
-  return 0;
 };
 // Returns the description depending on the restriction and level
 // prettier-ignore
@@ -45,6 +46,8 @@ const getText = (r, val) => {
       case "H2": return <div>No information about testing policy is available.</div>
       case "H6": return <div>No information about facial coverings are available.</div>
       case "H7": return <div>No information about vaccination policy is available.</div>
+      default:
+        return;
     }
   }
   if (r === "C1") {
@@ -53,6 +56,8 @@ const getText = (r, val) => {
       case(1): return <div>Recommend closing or all schools open with alterations resulting in significant differences compared to non-Covid-19 operations.</div>
       case(2): return <div>Some schools are only open for exams, but not for classes. Other schools are only being open for some groups.</div>
       case(3): return <div>All schools remain closed due to policies in place. In-person teaching is suspended and all instruction is online.</div>
+      default:
+        return;
     }
   } else if (r === "C2") {
     switch (val) {
@@ -60,6 +65,8 @@ const getText = (r, val) => {
       case(1): return <div>If workplaces can reopen under sanitation and social distancing requirements. E.g. up to 30% of capacity, and only outdoor seats.</div>
       case(2): return <div>Require closing (or work from home) for some sectors or categories of workers.</div>
       case(3): return <div>Require closing (or work from home) for all-but-essential workplaces. (e.g. grocery stores, doctors) </div>
+      default:
+        return;
     }
   } else if (r === "C4") {
     switch (val) {
@@ -68,6 +75,8 @@ const getText = (r, val) => {
       case(2): return <div>Gatherings of 101 to 1000 people are restricted.</div>
       case(3): return <div>Gatherings of 11 to 100 people are restricted.</div>
       case(4): return <div>Gatherings of 10 or less people are restricted.</div>
+      default:
+        return;
     }
   } else if (r === "C8") {
     switch (val) {
@@ -76,6 +85,8 @@ const getText = (r, val) => {
       case(2): return <div>International arrivals may be need to quarantine depending on their country of departure.</div>
       case(3): return <div>International arrivals may be banned from entering depending on their country of departure.</div>
       case(4): return <div>Borders are closed entirely for all arrivals.</div>
+      default:
+        return;
     }
   } else if (r === "H2") {
     switch (val) {
@@ -83,6 +94,8 @@ const getText = (r, val) => {
       case(1): return <div>PCR tests only available to those who have symptoms and meet specific criteria.</div>
       case(2): return <div>Announcement of a broader plan that includes funding and mobilizing resources to support local testing. Testing of anyone showing Covid-19 symptoms.</div>
       case(3): return <div>Widespread testing capacity reported for whoever wants it and good evidence that there is capacity on the ground to meet this.</div>
+      default:
+        return;
     }
   } else if (r === "H6") {
     switch (val) {
@@ -91,6 +104,8 @@ const getText = (r, val) => {
       case(2): return <div>Required in some specified shared/public spaces outside the home with other people present, or some situations when social distancing not possible.</div>
       case(3): return <div>Required in all shared/public spaces outside the home with other people present or all situations when social distancing not possible.</div>
       case(4): return <div>Required outside the home at all times regardless of location or presence of other people.</div>
+      default:
+        return;
     }
   } else if (r === "H7") {
     switch (val) {
@@ -100,6 +115,8 @@ const getText = (r, val) => {
       case(3): return <div>Availability for ALL of following: key workers/ clinically vulnerable groups (non elderly) / elderly groups.</div>
       case(4): return <div>The vaccine is available to almost everyone 18+.</div>
       case(5): return <div>The vaccine is available to everyone 16+ or 18+ (the lowest age permitted by the vaccine brand currently), and there is evidence that this is taking place on the ground.</div>
+      default:
+        return;
     }
   }
 }

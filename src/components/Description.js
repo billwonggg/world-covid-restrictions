@@ -23,6 +23,7 @@ const Description = () => {
           <a
             href="https://github.com/OxCGRT/covid-policy-tracker"
             target="_blank"
+            rel="noreferrer"
           >
             Oxford COVID-19 Government Response Tracker (OxCGRT)
           </a>

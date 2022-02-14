@@ -1,70 +1,32 @@
-# Getting Started with Create React App
+# World Covid Restrictions Map - [Link here](https://policy-map.web.app)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### This project was inspired by the gradual reopening of countries around the world, as we move through the pandemic. Different countries have different sets of restrictions, and it is often hard to keep track of changing restrictions for each country easily. <br><br>
 
-## Available Scripts
+### The website uses an interactive map and GUI to help users gather relevant information about overall restrictions for all countries along with specific rules such as international travel controls for each country.<br><br>
 
-In the project directory, you can run:
+### This project is the final product of one of my bootcamps after some small modifications.<br><br>
 
-### `npm start`
+### Tools used: React.js, Material UI, React-Leaflet, AWS Gateway, AWS Lambda, AWS DynamoDB
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<br>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+> ### Here are some of my responsibilities during the bootcamp: <br>
+>
+> - Led the frontend team: delegated tasks, initiated discussions, reviewed code, merged all files, helped team members debug and test code.
+> - Created the entire interactive map component: clickable countries, country outlines and popups with Leaflet and GeoJSON, dynamic color scheme and legend reflective of the restriction levels.
+> - Connected the frontend to the backend AWS API Gateway with asynchronous POST requests.
+> - Processed the JSON data from the backend and integrated it into the map and information tabs with React States and Hooks.
+> - Worked closely with the UI/UX design group to design the general website layout which is most feasible to implement.
 
-### `npm test`
+<br>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### The data in the website is from the [Oxford COVID-19 Government Response Tracker (OxCGRT)](https://github.com/OxCGRT/covid-policy-tracker), Blavatnik School of Government, University of Oxford. <br><br>
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+> ## This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+>
+> ### In the project directory, you can run:
+>
+> - #### `npm install`
+> - #### `npm start`
+> - #### `npm test`
+> - #### `npm run build`

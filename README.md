@@ -2,15 +2,13 @@
 
 > ### This project is the final product of one of my bootcamps after some small modifications.
 
+#### This project was inspired by the gradual reopening of countries around the world, as we move through the pandemic. Different countries have different sets of restrictions, and it is often hard to keep track of changing restrictions for each country easily.
+
+#### The website uses an interactive map and GUI to help users gather relevant information about overall restrictions for all countries along with specific rules such as international travel controls for each country.
+
 <br>
-
-#### This project was inspired by the gradual reopening of countries around the world, as we move through the pandemic. Different countries have different sets of restrictions, and it is often hard to keep track of changing restrictions for each country easily. <br><br>
-
-#### The website uses an interactive map and GUI to help users gather relevant information about overall restrictions for all countries along with specific rules such as international travel controls for each country.<br><br>
 
 #### Tools used: React.js, Material UI, React-Leaflet, AWS Gateway, AWS Lambda, AWS DynamoDB
-
-<br>
 
 > ### Here are some of my responsibilities during the bootcamp: <br>
 >

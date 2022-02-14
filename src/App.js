@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import Map from "./components/Map";
 import InfoTabs from "./components/InfoTabs";
 import Description from "./components/Description";
+import Footer from "./components/Footer";
 // import Grid from "@mui/material/Grid";
 
 function App() {
@@ -85,7 +86,7 @@ function App() {
           alignItems: "center",
         }}
       >
-        <div id="header">
+        <div id="bar">
           <Header
             country={country}
             setCountry={setCountry}
@@ -124,6 +125,7 @@ function App() {
           </div>
         )}
       </Box>
+      {/* <Footer /> */}
     </div>
   );
 }

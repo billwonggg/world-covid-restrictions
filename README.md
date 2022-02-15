@@ -23,6 +23,7 @@
 ### **Desktop Preview**:
 
 ![Home Page](./images/all.png)
+<br>
 ![Selected Country](./images/select.png)
 
 <br>

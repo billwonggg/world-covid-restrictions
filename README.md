@@ -1,6 +1,6 @@
 # **World Covid Restrictions Map** - [_Link here_](https://policy-map.web.app)
 
-> ### This project is the final product of one of my bootcamps after some small modifications.
+> ### This project is the final product of one of my bootcamps after some _small_ modifications.
 
 #### This project was inspired by the gradual reopening of countries around the world, as we move through the pandemic. Different countries have different sets of restrictions, and it is often hard to keep track of changing restrictions for each country easily.
 
@@ -10,7 +10,7 @@
 
 > #### Here are some of my responsibilities during the bootcamp: <br>
 >
-> - #### Led the frontend team: delegated tasks, initiated discussions, reviewed code, merged all files, helped team members debug and test code.
+> - #### Led the front-end team: delegated tasks, initiated discussions, reviewed code, merged all files, helped team members debug and test code.
 > - #### Implemented the entire interactive map component: clickable countries, country outlines and popups with Leaflet and GeoJSON, dynamic color scheme and legend reflective of the restriction levels.
 > - #### Connected the frontend to the backend AWS API Gateway with asynchronous POST requests.
 > - #### Processed the JSON data from the backend and integrated it into the map and information tabs with React States and Hooks.

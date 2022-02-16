@@ -173,12 +173,16 @@ export default function InfoTabs({
                 }
               }
 
-              return (
+              return val != null ? (
                 <TabPanel key={i} value={r.value}>
                   Sub-index score: <strong>{getIndicator(r.value, val)}</strong>
                   . (Higher values indicating more government activity and
                   stricter policy) <br />
                   <br />
+                  {getText(r.value, val)}
+                </TabPanel>
+              ) : (
+                <TabPanel key={i} value={r.value}>
                   {getText(r.value, val)}
                 </TabPanel>
               );

@@ -22,7 +22,7 @@
 
 ### **Desktop Preview**:
 
-![Home Page](./images/all_countries.png)
+![Home Page](./images/all.png)
 <br>
 ![Selected Country](./images/individual.png)
 

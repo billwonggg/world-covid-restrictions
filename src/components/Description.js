@@ -1,16 +1,19 @@
 import React from "react";
 
-const Description = () => {
+const Description = ({ date }) => {
+  const arr = date.split("-");
+  const d = `${arr[2]}/${arr[1]}/${arr[0]}`;
   return (
     <>
-      <h2>World Stringency Index</h2>
+      <h2>World Stringency Index on {d}</h2>
 
       <div style={{ textAlign: "left" }}>
         <p>
           The above map shows the stringency index for each country, which is
           the strictness of "lockdown style" policies that primarily restrict
-          people's behaviour. It is calculated using all ordinal containment and
-          closure policy indicators.
+          people's behaviour. It is measured as a value between 0 and 100, where
+          a higher score indicates a stricter response (i.e. 100 = strictest
+          response).
         </p>
 
         <p>

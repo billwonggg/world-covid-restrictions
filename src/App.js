@@ -108,7 +108,7 @@ function App() {
         {/* show description only when no country is selected */}
         {country === "" && (
           <div id="description">
-            <Description />
+            <Description date={date} />
           </div>
         )}
         {/* show tabs only when a country is selected */}

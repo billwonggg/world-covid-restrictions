@@ -3,7 +3,7 @@ import React from "react";
 const Footer = () => {
   return (
     <div>
-      Front-end made by Bill Wong.{" "}
+      Thanks for visiting our site. 🙂{" "}
       <a
         href="https://github.com/billwonggg/world-covid-restrictions"
         target="_blank"

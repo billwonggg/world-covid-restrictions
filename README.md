@@ -24,7 +24,7 @@
 
 ![Home Page](./images/all.png)
 <br>
-![Selected Country](./images/individual.png)
+![Selected Country](./images/select.png)
 
 <br>
 

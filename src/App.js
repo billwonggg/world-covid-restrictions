@@ -22,8 +22,8 @@ function App() {
   // current date selected
   const [date, setDate] = useState(() => {
     const day = new Date();
-    // we search up data a week ago
-    day.setDate(day.getDate() - 5);
+    // we search up data 4 days ago
+    day.setDate(day.getDate() - 4);
     return day.toLocaleDateString("en-CA");
   });
 

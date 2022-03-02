@@ -34,7 +34,6 @@ const Legend = ({ map }) => {
         let labels = [];
         let from;
         let to;
-
         for (let i = 0; i < grades.length - 1; i++) {
           from = grades[i];
           to = grades[i + 1];
@@ -48,6 +47,7 @@ const Legend = ({ map }) => {
               to
           );
         }
+        labels.push('<i style="background: #c4c5c6"></i> No Data');
         div.innerHTML = labels.join("<br>");
         return div;
       };

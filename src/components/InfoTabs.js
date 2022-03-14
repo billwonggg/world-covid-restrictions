@@ -62,7 +62,7 @@ const getText = (r, val) => {
   } else if (r === "C2") {
     switch (val) {
       case(0): return <div>There are no restrictions on workplace closures.</div>
-      case(1): return <div>If workplaces can reopen under sanitation and social distancing requirements. E.g. up to 30% of capacity, and only outdoor seats.</div>
+      case(1): return <div>Workplaces can reopen under sanitation and social distancing requirements. E.g. up to 30% of capacity, and only outdoor seats.</div>
       case(2): return <div>Require closing (or work from home) for some sectors or categories of workers.</div>
       case(3): return <div>Require closing (or work from home) for all-but-essential workplaces. (e.g. grocery stores, doctors) </div>
       default:
@@ -176,8 +176,7 @@ export default function InfoTabs({
               return val != null ? (
                 <TabPanel key={i} value={r.value}>
                   Sub-index score: <strong>{getIndicator(r.value, val)}</strong>
-                  . (Higher values indicating more government activity and
-                  stricter policy) <br />
+                  . (Higher values indicates stricter policy) <br />
                   <br />
                   {getText(r.value, val)}
                 </TabPanel>

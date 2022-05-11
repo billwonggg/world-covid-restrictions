@@ -79,6 +79,9 @@ const App = () => {
     allAPI();
   }, [date]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const arr = date.split("-");
+  const d = `${arr[2]}/${arr[1]}/${arr[0]}`;
+
   return (
     <ThemeProvider theme={darkMode ? themeDark : themeLight}>
       <CssBaseline />
@@ -102,7 +105,7 @@ const App = () => {
               setDarkMode={setDarkMode}
             />
           </div>
-
+          <h2>World Stringency Index on {d}</h2>
           <div>
             <Map
               country={country}
@@ -117,7 +120,7 @@ const App = () => {
           {/* show description only when no country is selected */}
           {country === "" && (
             <div id="description">
-              <Description date={date} />
+              <Description />
             </div>
           )}
           {/* show tabs only when a country is selected */}

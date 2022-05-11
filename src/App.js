@@ -2,13 +2,18 @@ import "./App.css";
 import React, { useEffect, useState } from "react";
 import { Restrictions } from "./data/Restrictions";
 import Box from "@mui/material/Box";
+import { ThemeProvider } from "@mui/material";
+import { CssBaseline } from "@mui/material";
+import { themeLight, themeDark } from "./theme";
 import Header from "./components/Header";
 import Map from "./components/Map";
 import InfoTabs from "./components/InfoTabs";
 import Description from "./components/Description";
 import Footer from "./components/Footer";
 
-function App() {
+const App = () => {
+  // app theme (light/dark)
+  const [darkMode, setDarkMode] = useState(false);
   // three letter ISO alpha 3 country code (current country selected)
   const [country, setCountry] = useState("");
   // full name of selected country
@@ -75,60 +80,65 @@ function App() {
   }, [date]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className="App">
-      <Box
-        sx={{
-          m: 3,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-around",
-          alignItems: "center",
-        }}
-      >
-        <div id="bar">
-          <Header
-            country={country}
-            setCountry={setCountry}
-            date={date}
-            setDate={setDate}
-          />
-        </div>
-
-        <div>
-          <Map
-            country={country}
-            setCountry={setCountry}
-            countryName={countryName}
-            setCountryName={setCountryName}
-            countryData={countryData}
-            allCountryData={allCountryData}
-            restriction={restriction}
-          />
-        </div>
-        {/* show description only when no country is selected */}
-        {country === "" && (
-          <div id="description">
-            <Description date={date} />
-          </div>
-        )}
-        {/* show tabs only when a country is selected */}
-        {country && (
-          <div id="tabs">
-            <InfoTabs
-              countryName={countryName}
+    <ThemeProvider theme={darkMode ? themeDark : themeLight}>
+      <CssBaseline />
+      <div className="App">
+        <Box
+          sx={{
+            m: 3,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-around",
+            alignItems: "center",
+          }}
+        >
+          <div id="bar">
+            <Header
+              country={country}
+              setCountry={setCountry}
               date={date}
-              countryData={countryData}
-              restriction={restriction}
-              setRestriction={setRestriction}
+              setDate={setDate}
+              darkMode={darkMode}
+              setDarkMode={setDarkMode}
             />
           </div>
-        )}
-      </Box>
-      <div id="footer">
-        <Footer />
+
+          <div>
+            <Map
+              country={country}
+              setCountry={setCountry}
+              countryName={countryName}
+              setCountryName={setCountryName}
+              countryData={countryData}
+              allCountryData={allCountryData}
+              restriction={restriction}
+            />
+          </div>
+          {/* show description only when no country is selected */}
+          {country === "" && (
+            <div id="description">
+              <Description date={date} />
+            </div>
+          )}
+          {/* show tabs only when a country is selected */}
+          {country && (
+            <div id="tabs">
+              <InfoTabs
+                countryName={countryName}
+                date={date}
+                countryData={countryData}
+                restriction={restriction}
+                setRestriction={setRestriction}
+              />
+            </div>
+          )}
+        </Box>
+        <div id="footer">
+          <Footer />
+        </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;

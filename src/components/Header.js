@@ -2,12 +2,20 @@ import React from "react";
 import MenuItem from "@mui/material/MenuItem";
 import { DatePicker, LocalizationProvider } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import { TextField } from "@mui/material";
+import { TextField, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import { Switch, Stack } from "@mui/material";
 import { Countries } from "../data/Countries";
 
-export default function SearchBar({ country, setCountry, date, setDate }) {
+export default function SearchBar({
+  country,
+  setCountry,
+  date,
+  setDate,
+  darkMode,
+  setDarkMode,
+}) {
   // set country ISO code when clicked
   const handleCountryChange = (event) => {
     console.log(event.target.value);
@@ -15,9 +23,9 @@ export default function SearchBar({ country, setCountry, date, setDate }) {
   };
 
   return (
-    <Box display="flex" justifyContent="center" alignItems="center">
-      <Grid container justifyContent="space-around" m={2}>
-        <Grid item m={1} xs={4} md={3}>
+    <Box>
+      <Grid container m={2} justifyContent="space-between">
+        <Grid item m={2} xs={4} md={3}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
               openTo="year"
@@ -39,7 +47,7 @@ export default function SearchBar({ country, setCountry, date, setDate }) {
 
         <Grid
           item
-          m={1}
+          m={2}
           xs={6}
           md={4}
           justifyContent="center"
@@ -59,6 +67,13 @@ export default function SearchBar({ country, setCountry, date, setDate }) {
               </MenuItem>
             ))}
           </TextField>
+        </Grid>
+        <Grid item m={1}>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <Typography>Light</Typography>
+            <Switch onClick={() => setDarkMode(!darkMode)} />
+            <Typography>Dark</Typography>
+          </Stack>
         </Grid>
       </Grid>
     </Box>

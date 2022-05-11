@@ -5,8 +5,9 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { TextField, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import { Switch, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import { Countries } from "../data/Countries";
+import ThemeSwitch from "./ThemeSwitch";
 
 export default function SearchBar({
   country,
@@ -23,8 +24,8 @@ export default function SearchBar({
   };
 
   return (
-    <Box>
-      <Grid container m={2} justifyContent="space-between">
+    <Box display="flex" justifyContent="center" alignItems="center">
+      <Grid container justifyContent="space-evenly" m={2}>
         <Grid item m={2} xs={4} md={3}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
@@ -54,6 +55,7 @@ export default function SearchBar({
           alignItems="center"
         >
           <TextField
+            sx={{ maxWidth: "400px" }}
             variant="outlined"
             label="Country"
             fullWidth
@@ -68,10 +70,16 @@ export default function SearchBar({
             ))}
           </TextField>
         </Grid>
-        <Grid item m={1}>
+        <Grid
+          item
+          m={1}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
           <Stack direction="row" spacing={1} alignItems="center">
             <Typography>Light</Typography>
-            <Switch onClick={() => setDarkMode(!darkMode)} />
+            <ThemeSwitch onClick={() => setDarkMode(!darkMode)} />
             <Typography>Dark</Typography>
           </Stack>
         </Grid>

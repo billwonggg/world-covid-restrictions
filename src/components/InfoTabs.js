@@ -173,18 +173,17 @@ export default function InfoTabs({
                 }
               }
 
-              return val != null ? (
-                <TabPanel key={i} value={r.value}>
-                  Sub-index score: <strong>{getIndicator(r.value, val)}</strong>
-                  . (Higher values indicates stricter policy) <br />
-                  <br />
-                  {getText(r.value, val)}
-                </TabPanel>
-              ) : (
-                <TabPanel key={i} value={r.value}>
-                  {getText(r.value, val)}
-                </TabPanel>
-              );
+              if (val != null) {
+                return (
+                  <TabPanel key={i} value={r.value}>
+                    Sub-index score:{" "}
+                    <strong>{getIndicator(r.value, val)}</strong>
+                    . (Higher values indicates stricter policy) <br />
+                    <br />
+                    {getText(r.value, val)}
+                  </TabPanel>
+                );
+              }
             })}
           </TabContext>
         </Box>

@@ -3,7 +3,7 @@ import React from "react";
 const Footer = () => {
   return (
     <div>
-      Thanks for visiting this website. 🙂{" "}
+      Thanks for visiting my website. 🙂{" "}
       <a
         href="https://github.com/billwonggg/world-covid-restrictions"
         target="_blank"

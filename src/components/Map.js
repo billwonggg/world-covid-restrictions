@@ -16,7 +16,6 @@ const Map = ({
 }) => {
   // States
   const [map, setMap] = useState(null);
-  // const [hover, setHover] = useState(null);
 
   // latitude and longitude for the popup to show
   const [latlng, setLatLng] = useState(null);
@@ -149,15 +148,15 @@ const Map = ({
                     setCountry(ISO);
                   }
                 },
-                mouseover: (e) => {},
-                mouseout: (e) => {},
               }}
-            ></GeoJSON>
+            />
           );
         })}
         {latlng && (
           <Popup position={latlng}>
             <strong>{countryName}</strong>
+            <br />
+            {countryData?.stringencyData?.confirmed}
           </Popup>
         )}
         <Legend map={map} />

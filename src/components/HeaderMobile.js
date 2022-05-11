@@ -1,15 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import MenuItem from "@mui/material/MenuItem";
 import { DatePicker, LocalizationProvider } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { TextField, Typography } from "@mui/material";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { Stack } from "@mui/material";
+import { Drawer, Button } from "@mui/material";
+import { List, ListItem, Divider } from "@mui/material";
 import { Countries } from "../data/Countries";
 import ThemeSwitch from "./ThemeSwitch";
 
-export default function Header({
+export default function HeaderMobile({
   country,
   setCountry,
   date,
@@ -17,6 +18,7 @@ export default function Header({
   darkMode,
   setDarkMode,
 }) {
+  const [open, setOpen] = useState(false);
   // set country ISO code when clicked
   const handleCountryChange = (event) => {
     console.log(event.target.value);
@@ -25,9 +27,24 @@ export default function Header({
 
   return (
     <Box display="flex" justifyContent="center" alignItems="center">
-      <Box width="90vw">
-        <Grid container justifyContent="space-evenly" m={2}>
-          <Grid item m={2} xs={4} md={3}>
+      <Button
+        onClick={() => {
+          setOpen(!open);
+        }}
+      >
+        hi
+      </Button>
+      <Drawer anchor="left" open={open} onClose={() => setOpen(false)}>
+        <List>
+          <ListItem style={{ justifyContent: "center" }} sx={{ mt: 3 }}>
+            <Stack direction="row" spacing={1} alignItems="center">
+              <Typography>Light</Typography>
+              <ThemeSwitch onClick={() => setDarkMode(!darkMode)} />
+              <Typography>Dark</Typography>
+            </Stack>
+          </ListItem>
+          <Divider sx={{ mt: 3 }} />
+          <ListItem sx={{ mt: 3 }}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
                 openTo="year"
@@ -43,20 +60,13 @@ export default function Header({
                 renderInput={(params) => (
                   <TextField {...params} helperText={null} />
                 )}
+                // sx={{ width: "300px" }}
               />
             </LocalizationProvider>
-          </Grid>
-
-          <Grid
-            item
-            m={2}
-            xs={6}
-            md={4}
-            justifyContent="center"
-            alignItems="center"
-          >
+          </ListItem>
+          <ListItem sx={{ mt: 3 }}>
             <TextField
-              sx={{ maxWidth: "400px" }}
+              sx={{ maxWidth: "250px" }}
               variant="outlined"
               label="Country"
               fullWidth
@@ -70,22 +80,9 @@ export default function Header({
                 </MenuItem>
               ))}
             </TextField>
-          </Grid>
-          <Grid
-            item
-            m={1}
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Stack direction="row" spacing={1} alignItems="center">
-              <Typography>Light</Typography>
-              <ThemeSwitch onClick={() => setDarkMode(!darkMode)} />
-              <Typography>Dark</Typography>
-            </Stack>
-          </Grid>
-        </Grid>
-      </Box>
+          </ListItem>
+        </List>
+      </Drawer>
     </Box>
   );
 }

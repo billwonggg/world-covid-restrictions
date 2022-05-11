@@ -1,19 +1,23 @@
-import "./App.css";
 import React, { useEffect, useState } from "react";
 import { Restrictions } from "./data/Restrictions";
 import Box from "@mui/material/Box";
 import { ThemeProvider } from "@mui/material";
 import { CssBaseline } from "@mui/material";
 import { themeLight, themeDark } from "./theme";
+import { isMobile } from "react-device-detect";
 import Header from "./components/Header";
 import Map from "./components/Map";
 import InfoTabs from "./components/InfoTabs";
 import Description from "./components/Description";
 import Footer from "./components/Footer";
+import HeaderMobile from "./components/HeaderMobile";
+import "./App.css";
 
 const App = () => {
   // app theme (light/dark)
   const [darkMode, setDarkMode] = useState(false);
+  // user device
+  const [mobile, setMobile] = useState(isMobile);
   // three letter ISO alpha 3 country code (current country selected)
   const [country, setCountry] = useState("");
   // full name of selected country
@@ -31,6 +35,19 @@ const App = () => {
     day.setDate(day.getDate() - 4);
     return day.toLocaleDateString("en-CA");
   });
+
+  useEffect(() => {
+    const setResponsiveness = () => {
+      return isMobile ? setMobile(true) : setMobile(false);
+    };
+
+    setResponsiveness();
+    window.addEventListener("resize", () => setResponsiveness());
+
+    return () => {
+      window.removeEventListener("resize", () => setResponsiveness());
+    };
+  }, []);
 
   const individualAPI = async () => {
     if (country === "" || !date) {
@@ -88,14 +105,21 @@ const App = () => {
       <div className="App">
         <Box
           sx={{
-            m: 3,
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-around",
             alignItems: "center",
           }}
         >
-          <div id="bar">
+          <HeaderMobile
+            country={country}
+            setCountry={setCountry}
+            date={date}
+            setDate={setDate}
+            darkMode={darkMode}
+            setDarkMode={setDarkMode}
+          />
+          {/* {mobile ? (
             <Header
               country={country}
               setCountry={setCountry}
@@ -104,7 +128,17 @@ const App = () => {
               darkMode={darkMode}
               setDarkMode={setDarkMode}
             />
-          </div>
+          ) : (
+            <HeaderMobile
+              country={country}
+              setCountry={setCountry}
+              date={date}
+              setDate={setDate}
+              darkMode={darkMode}
+              setDarkMode={setDarkMode}
+            />
+          )} */}
+
           <h2>World Stringency Index on {d}</h2>
           <div>
             <Map

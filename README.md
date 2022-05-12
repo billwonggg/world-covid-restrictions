@@ -32,7 +32,7 @@
 
 <br>
 
-<img src="./images/select.png" width="750">
+<img src="./images/individual.png" width="750">
 
 ### Mobile Preview:
 

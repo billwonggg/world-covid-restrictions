@@ -107,6 +107,7 @@ const App = () => {
             flexDirection: "column",
             justifyContent: "space-around",
             alignItems: "center",
+            mb: "10px",
           }}
         >
           {width <= 900 ? (

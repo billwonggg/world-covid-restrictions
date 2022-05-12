@@ -37,7 +37,7 @@ export default function Header({
             <Grid item md={3} justifyContent="center" alignItems="center">
               <h2>COVID Policy Map</h2>
             </Grid>
-            <Grid item m={2} md={3}>
+            <Grid item m={1} md={3}>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
                   openTo="year"
@@ -57,7 +57,7 @@ export default function Header({
               </LocalizationProvider>
             </Grid>
 
-            <Grid item m={2} md={3} justifyContent="center" alignItems="center">
+            <Grid item m={1} md={3} justifyContent="center" alignItems="center">
               <TextField
                 sx={{ maxWidth: "400px" }}
                 variant="outlined"
@@ -84,7 +84,10 @@ export default function Header({
             >
               <Stack direction="row" spacing={1} alignItems="center">
                 <Typography>Light</Typography>
-                <ThemeSwitch onClick={() => setDarkMode(!darkMode)} />
+                <ThemeSwitch
+                  checked={darkMode}
+                  onClick={() => setDarkMode(!darkMode)}
+                />
                 <Typography>Dark</Typography>
               </Stack>
             </Grid>

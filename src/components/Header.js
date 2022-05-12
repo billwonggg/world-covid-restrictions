@@ -24,10 +24,19 @@ export default function Header({
   };
 
   return (
-    <Box display="flex" justifyContent="center" alignItems="center">
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      width="100%"
+      // sx={{ backgroundColor: "#25282e", color: "#fff" }}
+    >
       <Box width="90vw">
         <Grid container justifyContent="space-evenly" m={2}>
-          <Grid item m={2} xs={4} md={3}>
+          <Grid item md={3} justifyContent="center" alignItems="center">
+            <h2>COVID Policy Map</h2>
+          </Grid>
+          <Grid item m={2} md={3}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
                 openTo="year"
@@ -47,14 +56,7 @@ export default function Header({
             </LocalizationProvider>
           </Grid>
 
-          <Grid
-            item
-            m={2}
-            xs={6}
-            md={4}
-            justifyContent="center"
-            alignItems="center"
-          >
+          <Grid item m={2} md={3} justifyContent="center" alignItems="center">
             <TextField
               sx={{ maxWidth: "400px" }}
               variant="outlined"
@@ -74,6 +76,7 @@ export default function Header({
           <Grid
             item
             m={1}
+            md={2}
             display="flex"
             justifyContent="center"
             alignItems="center"

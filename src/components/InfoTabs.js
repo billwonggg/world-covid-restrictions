@@ -143,9 +143,7 @@ export default function InfoTabs({
       </div>
 
       {countryData && countryData[0].policy_type_code === "NONE" ? (
-        <div>
-          No data from Oxford Covid Policy Tracker for {countryName} on {d}.
-        </div>
+        <div>No data from Oxford Covid Policy Tracker for {countryName}.</div>
       ) : (
         <Box sx={{ width: "100%", typography: "body1" }}>
           <TabContext value={restriction}>

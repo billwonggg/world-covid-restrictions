@@ -5,7 +5,8 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { TextField, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import { Stack } from "@mui/material";
-import { Drawer, Button } from "@mui/material";
+import { Drawer, IconButton } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 import { List, ListItem, Divider } from "@mui/material";
 import { Countries } from "../data/Countries";
 import ThemeSwitch from "./ThemeSwitch";
@@ -26,14 +27,14 @@ export default function HeaderMobile({
   };
 
   return (
-    <Box display="flex" justifyContent="center" alignItems="center">
-      <Button
+    <div style={{ display: "flex", justifyContent: "flex-start" }}>
+      <IconButton
         onClick={() => {
           setOpen(!open);
         }}
       >
-        hi
-      </Button>
+        <MenuIcon />
+      </IconButton>
       <Drawer anchor="left" open={open} onClose={() => setOpen(false)}>
         <List>
           <ListItem style={{ justifyContent: "center" }} sx={{ mt: 3 }}>
@@ -83,6 +84,6 @@ export default function HeaderMobile({
           </ListItem>
         </List>
       </Drawer>
-    </Box>
+    </div>
   );
 }

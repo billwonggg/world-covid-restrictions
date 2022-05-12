@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { MapContainer, GeoJSON, TileLayer, Popup } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
 import data from "../data/countries.json";
 import { Countries } from "../data/Countries";
 import Legend from "./Legend";
+import "leaflet/dist/leaflet.css";
 
 const Map = ({
   country,

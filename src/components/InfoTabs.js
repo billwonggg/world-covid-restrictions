@@ -159,7 +159,6 @@ export default function InfoTabs({
                 })}
               </TabList>
             </Box>
-
             {Restrictions.map((r, i) => {
               let val = null;
               if (countryData) {
@@ -171,17 +170,14 @@ export default function InfoTabs({
                 }
               }
 
-              if (val != null) {
-                return (
-                  <TabPanel key={i} value={r.value}>
-                    Sub-index score:{" "}
-                    <strong>{getIndicator(r.value, val)}</strong>
-                    . (Higher values indicates stricter policy) <br />
-                    <br />
-                    {getText(r.value, val)}
-                  </TabPanel>
-                );
-              }
+              return val != null ? (
+                <TabPanel key={i} value={r.value}>
+                  Sub-index score: <strong>{getIndicator(r.value, val)}</strong>
+                  . (Higher values indicates stricter policy) <br />
+                  <br />
+                  {getText(r.value, val)}
+                </TabPanel>
+              ) : null;
             })}
           </TabContext>
         </Box>

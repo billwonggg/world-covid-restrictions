@@ -36,8 +36,8 @@
 
 ### Mobile Preview:
 
-<img src="./images/mobile.png" width="250">
+<img src="./images/mob.png" width="250">
 
 <br>
 
-<img src="./images/mobile-menu.png" width="250">
+<img src="./images/mob-menu.png" width="250">

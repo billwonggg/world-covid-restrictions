@@ -129,7 +129,9 @@ const App = () => {
             />
           )}
 
-          <h2 style={{ textAlign: "center" }}>World Stringency Index on {d}</h2>
+          <h2 style={{ textAlign: "center", marginTop: "40px" }}>
+            World Stringency Index on {d}
+          </h2>
           <div>
             <Map
               country={country}

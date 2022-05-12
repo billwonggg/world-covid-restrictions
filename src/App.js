@@ -1,14 +1,22 @@
-import "./App.css";
 import React, { useEffect, useState } from "react";
 import { Restrictions } from "./data/Restrictions";
 import Box from "@mui/material/Box";
+import { ThemeProvider } from "@mui/material";
+import { CssBaseline } from "@mui/material";
+import { themeLight, themeDark } from "./theme";
 import Header from "./components/Header";
 import Map from "./components/Map";
 import InfoTabs from "./components/InfoTabs";
 import Description from "./components/Description";
 import Footer from "./components/Footer";
+import HeaderMobile from "./components/HeaderMobile";
+import "./App.css";
 
-function App() {
+const App = () => {
+  // app theme (light/dark)
+  const [darkMode, setDarkMode] = useState(false);
+  // user screen width
+  const [width, setWidth] = useState(window.innerWidth);
   // three letter ISO alpha 3 country code (current country selected)
   const [country, setCountry] = useState("");
   // full name of selected country
@@ -26,6 +34,17 @@ function App() {
     day.setDate(day.getDate() - 4);
     return day.toLocaleDateString("en-CA");
   });
+
+  const handleWindowSizeChange = () => {
+    setWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleWindowSizeChange);
+    return () => {
+      window.removeEventListener("resize", handleWindowSizeChange);
+    };
+  }, []);
 
   const individualAPI = async () => {
     if (country === "" || !date) {
@@ -59,7 +78,7 @@ function App() {
       const res = await r.json();
       setAllCountryData(res.data[date]);
     } catch (err) {
-      console.err(err);
+      console.log(err);
     }
   };
 
@@ -74,61 +93,82 @@ function App() {
     allAPI();
   }, [date]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  return (
-    <div className="App">
-      <Box
-        sx={{
-          m: 3,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-around",
-          alignItems: "center",
-        }}
-      >
-        <div id="bar">
-          <Header
-            country={country}
-            setCountry={setCountry}
-            date={date}
-            setDate={setDate}
-          />
-        </div>
+  const arr = date.split("-");
+  const d = `${arr[2]}/${arr[1]}/${arr[0]}`;
 
-        <div>
-          <Map
-            country={country}
-            setCountry={setCountry}
-            countryName={countryName}
-            setCountryName={setCountryName}
-            countryData={countryData}
-            allCountryData={allCountryData}
-            restriction={restriction}
-          />
-        </div>
-        {/* show description only when no country is selected */}
-        {country === "" && (
-          <div id="description">
-            <Description date={date} />
-          </div>
-        )}
-        {/* show tabs only when a country is selected */}
-        {country && (
-          <div id="tabs">
-            <InfoTabs
-              countryName={countryName}
+  console.log(width);
+  return (
+    <ThemeProvider theme={darkMode ? themeDark : themeLight}>
+      <CssBaseline />
+      <div className="App">
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-around",
+            alignItems: "center",
+            mb: "10px",
+          }}
+        >
+          {width <= 900 ? (
+            <HeaderMobile
+              country={country}
+              setCountry={setCountry}
               date={date}
+              setDate={setDate}
+              darkMode={darkMode}
+              setDarkMode={setDarkMode}
+            />
+          ) : (
+            <Header
+              country={country}
+              setCountry={setCountry}
+              date={date}
+              setDate={setDate}
+              darkMode={darkMode}
+              setDarkMode={setDarkMode}
+            />
+          )}
+
+          <h2 style={{ textAlign: "center", marginTop: "40px" }}>
+            World Stringency Index on {d}
+          </h2>
+          <div>
+            <Map
+              country={country}
+              setCountry={setCountry}
+              countryName={countryName}
+              setCountryName={setCountryName}
               countryData={countryData}
+              allCountryData={allCountryData}
               restriction={restriction}
-              setRestriction={setRestriction}
             />
           </div>
-        )}
-      </Box>
-      <div id="footer">
-        <Footer />
+          {/* show description only when no country is selected */}
+          {country === "" && (
+            <div id="description">
+              <Description />
+            </div>
+          )}
+          {/* show tabs only when a country is selected */}
+          {country && (
+            <div id="tabs">
+              <InfoTabs
+                countryName={countryName}
+                date={date}
+                countryData={countryData}
+                restriction={restriction}
+                setRestriction={setRestriction}
+              />
+            </div>
+          )}
+        </Box>
+        <div id="footer">
+          <Footer />
+        </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;

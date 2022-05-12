@@ -20,19 +20,24 @@
 
 #### The data in the website is from the [Oxford COVID-19 Government Response Tracker (OxCGRT)](https://github.com/OxCGRT/covid-policy-tracker), Blavatnik School of Government, University of Oxford. <br><br>
 
-### **Desktop Preview**:
+#### After creating the initial website during the bootcamp, I spent some of my spare time improving the website further. I added many new features such as the date-picker to display data from a specific date, map functionality improvements with popups, and color improvements with the addition of a legend. I also made lots of UI improvements, notably the implementation of a menu bar along with dark mode and greatly improved UI for mobile devices with a drawer.
 
-![Home Page](./images/all.png)
+### Desktop Preview:
+
+<img src="./images/light.png" width="750">
+
 <br>
-![Selected Country](./images/select.png)
+
+<img src="./images/dark.png" width="750">
 
 <br>
 
-### This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<img src="./images/select.png" width="750">
 
-> ### In the project directory, you can run:
->
-> - #### `npm install`
-> - #### `npm start`
-> - #### `npm test`
-> - #### `npm run build`
+### Mobile Preview:
+
+<img src="./images/mobile.png" width="250">
+
+<br>
+
+<img src="./images/mobile-menu.png" width="250">

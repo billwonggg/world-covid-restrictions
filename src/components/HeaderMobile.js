@@ -36,7 +36,7 @@ export default function HeaderMobile({
         >
           <MenuIcon />
         </IconButton>
-        <h2 style={{ marginLeft: "10px" }}>COVID Policy Map</h2>
+        <h2 style={{ marginLeft: "10px" }}>COVID-19 Policy Map</h2>
         <Drawer anchor="left" open={open} onClose={() => setOpen(false)}>
           <List>
             <ListItem style={{ justifyContent: "center" }} sx={{ mt: 3 }}>

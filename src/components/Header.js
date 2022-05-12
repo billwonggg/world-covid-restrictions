@@ -35,9 +35,9 @@ export default function Header({
         <Toolbar>
           <Grid container justifyContent="space-evenly" alignItems="center">
             <Grid item md={3} justifyContent="center" alignItems="center">
-              <h2>COVID Policy Map</h2>
+              <h2>COVID-19 Policy Map</h2>
             </Grid>
-            <Grid item m={1} md={3}>
+            <Grid item md={3}>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
                   openTo="year"
@@ -57,7 +57,7 @@ export default function Header({
               </LocalizationProvider>
             </Grid>
 
-            <Grid item m={1} md={3} justifyContent="center" alignItems="center">
+            <Grid item md={3} justifyContent="center" alignItems="center">
               <TextField
                 sx={{ maxWidth: "400px" }}
                 variant="outlined"
@@ -76,7 +76,6 @@ export default function Header({
             </Grid>
             <Grid
               item
-              m={1}
               md={2}
               display="flex"
               justifyContent="center"

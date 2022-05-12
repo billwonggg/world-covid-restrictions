@@ -60,7 +60,7 @@ const App = () => {
       }
       setCountryData(data.policyActions);
     } catch (err) {
-      console.err(err);
+      console.log(err);
     }
   };
 
@@ -96,7 +96,6 @@ const App = () => {
   const arr = date.split("-");
   const d = `${arr[2]}/${arr[1]}/${arr[0]}`;
 
-  console.log(width);
   return (
     <ThemeProvider theme={darkMode ? themeDark : themeLight}>
       <CssBaseline />

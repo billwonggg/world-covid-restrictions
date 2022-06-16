@@ -3,7 +3,7 @@ import React from "react";
 const Footer = () => {
   return (
     <div>
-      Thanks for visiting my website. 🙂{" "}
+      &copy; {new Date().getFullYear()} Bill Wong.&nbsp;
       <a
         href="https://github.com/billwonggg/world-covid-restrictions"
         target="_blank"

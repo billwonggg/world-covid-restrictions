@@ -2,7 +2,7 @@ import React from "react";
 import MenuItem from "@mui/material/MenuItem";
 import { DatePicker, LocalizationProvider } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import { TextField, Typography } from "@mui/material";
+import { TextField, Typography, Select, InputLabel, FormControl } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { AppBar, Toolbar } from "@mui/material";
@@ -10,14 +10,7 @@ import { Stack } from "@mui/material";
 import { Countries } from "../data/Countries";
 import ThemeSwitch from "./ThemeSwitch";
 
-export default function Header({
-  country,
-  setCountry,
-  date,
-  setDate,
-  darkMode,
-  setDarkMode,
-}) {
+export default function Header({ country, setCountry, date, setDate, darkMode, setDarkMode }) {
   // set country ISO code when clicked
   const handleCountryChange = (event) => {
     console.log(event.target.value);
@@ -25,14 +18,9 @@ export default function Header({
   };
 
   return (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      width="100%"
-    >
+    <Box display="flex" justifyContent="center" alignItems="center" width="100%">
       <AppBar position="static" height="200px">
-        <Toolbar>
+        <Toolbar disableGutters>
           <Grid container justifyContent="space-evenly" alignItems="center">
             <Grid item md={3} justifyContent="center" alignItems="center">
               <h2>COVID-19 Policy Map</h2>
@@ -50,43 +38,33 @@ export default function Header({
                   onChange={(newValue) => {
                     setDate(newValue.toLocaleDateString("en-CA"));
                   }}
-                  renderInput={(params) => (
-                    <TextField {...params} helperText={null} />
-                  )}
+                  renderInput={(params) => <TextField {...params} helperText={null} />}
                 />
               </LocalizationProvider>
             </Grid>
 
             <Grid item md={3} justifyContent="center" alignItems="center">
-              <TextField
-                sx={{ maxWidth: "400px" }}
-                variant="outlined"
-                label="Country"
-                fullWidth
-                select
-                value={country}
-                onChange={handleCountryChange}
-              >
-                {Countries.map((c) => (
-                  <MenuItem key={c.ISO_A3} value={c.ISO_A3}>
-                    {c.name}
-                  </MenuItem>
-                ))}
-              </TextField>
+              <FormControl fullWidth>
+                <InputLabel>Country</InputLabel>
+                <Select
+                  label="Country"
+                  value={country}
+                  onChange={handleCountryChange}
+                  sx={{ maxWidth: "400px" }}
+                  MenuProps={{ PaperProps: { sx: { maxHeight: "30vh" } } }}
+                >
+                  {Countries.map((c) => (
+                    <MenuItem key={c.ISO_A3} value={c.ISO_A3}>
+                      {c.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Grid>
-            <Grid
-              item
-              md={2}
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-            >
+            <Grid item md={2} display="flex" justifyContent="center" alignItems="center">
               <Stack direction="row" spacing={1} alignItems="center">
                 <Typography>Light</Typography>
-                <ThemeSwitch
-                  checked={darkMode}
-                  onClick={() => setDarkMode(!darkMode)}
-                />
+                <ThemeSwitch checked={darkMode} onClick={() => setDarkMode(!darkMode)} />
                 <Typography>Dark</Typography>
               </Stack>
             </Grid>

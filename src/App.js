@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { Restrictions } from "./data/Restrictions";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import Box from "@mui/material/Box";
-import { ThemeProvider } from "@mui/material";
-import { CssBaseline } from "@mui/material";
-import { themeLight, themeDark } from "./theme";
-import Header from "./components/Header";
-import Map from "./components/Map";
-import InfoTabs from "./components/InfoTabs";
+import React, { useEffect, useState } from "react";
+import "./App.css";
 import Description from "./components/Description";
 import Footer from "./components/Footer";
+import Header from "./components/Header";
 import HeaderMobile from "./components/HeaderMobile";
-import "./App.css";
+import InfoTabs from "./components/InfoTabs";
+import Map from "./components/Map";
+import { Restrictions } from "./data/Restrictions";
+import { themeDark, themeLight } from "./theme";
 
 const App = () => {
   // app theme (light/dark)
@@ -31,7 +30,7 @@ const App = () => {
   const [date, setDate] = useState(() => {
     const day = new Date();
     // we search up data 4 days ago
-    day.setDate(day.getDate() - 4);
+    day.setDate(day.getDate() - 8);
     return day.toLocaleDateString("en-CA");
   });
 
@@ -129,9 +128,7 @@ const App = () => {
             />
           )}
 
-          <h2 style={{ textAlign: "center", marginTop: "40px" }}>
-            World Stringency Index on {d}
-          </h2>
+          <h2 style={{ textAlign: "center", marginTop: "40px" }}>World Stringency Index on {d}</h2>
           <div>
             <Map
               country={country}

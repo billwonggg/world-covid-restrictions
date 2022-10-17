@@ -1,6 +1,6 @@
 # **World Covid Restrictions Map** - [_Link here_](https://policy-map.web.app)
 
-> ### This project is the final product of one of my bootcamps after some _small_ modifications.
+> ### This project is the final product of one of my bootcamps after some modifications afterwards.
 
 #### This project was inspired by the gradual reopening of countries around the world, as we move through the pandemic. Different countries have different sets of restrictions, and it is often hard to keep track of changing restrictions for each country easily.
 
@@ -20,7 +20,18 @@
 
 #### The data in the website is from the [Oxford COVID-19 Government Response Tracker (OxCGRT)](https://github.com/OxCGRT/covid-policy-tracker), Blavatnik School of Government, University of Oxford. <br><br>
 
-#### After creating the initial website during the bootcamp, I spent some of my spare time improving the website further. I added many new features such as the date-picker to display data from a specific date, map functionality improvements with popups, and color improvements with the addition of a legend. I also made lots of UI improvements, notably the implementation of a menu bar along with dark mode and greatly improved UI for mobile devices with a drawer.
+### May 2022 Update
+
+After creating the initial website during the bootcamp, I spent some of my spare time improving the website further. I added many new features such as the date-picker to display data from a specific date, map functionality improvements with popups, and color improvements with the addition of a legend. I also made lots of UI improvements, notably the implementation of a menu bar along with dark mode and greatly improved UI for mobile devices with a drawer.
+
+### October 2022 Update
+
+- Update all dependencies to the latest versions, (React 18, React leaflet 4.x, and more)
+- Refactored some parts of code.
+- Fixed form input border disappearing bug.
+- Small style changes.
+- Use build compress tool to reduce build size by ~70%.
+- Use continuous deployment Github actions to deploy code.
 
 ### Desktop Preview:
 

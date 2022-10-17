@@ -1,9 +1,5 @@
+import { Box, Tab, Tabs } from "@mui/material";
 import React from "react";
-import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
-import TabContext from "@mui/lab/TabContext";
-import TabList from "@mui/lab/TabList";
-import TabPanel from "@mui/lab/TabPanel";
 import { Restrictions } from "../data/Restrictions";
 
 // returns a line of text with the indicator score
@@ -39,7 +35,7 @@ const getIndicator = (r, val) => {
 const getText = (r, val) => {
   if (val == null) {
     switch(r) {
-      case "C1": return <div>No information about school closures are available.</div>
+      case "C1": return <div>No information about school closure is available.</div>
       case "C2": return <div>No information about workplace closure is available.</div>
       case "C4": return <div>No information about restrictions on gatherings are available.</div>
       case "C8": return <div>No information about international travel controls are available.</div>
@@ -121,13 +117,7 @@ const getText = (r, val) => {
   }
 }
 
-export default function InfoTabs({
-  countryName,
-  date,
-  countryData,
-  restriction,
-  setRestriction,
-}) {
+const InfoTabs = ({ countryName, date, countryData, restriction, setRestriction }) => {
   const handleChange = (e, newValue) => {
     setRestriction(newValue);
   };
@@ -146,42 +136,43 @@ export default function InfoTabs({
         <div>No data from Oxford Covid Policy Tracker for {countryName}.</div>
       ) : (
         <Box sx={{ width: "100%", typography: "body1" }}>
-          <TabContext value={restriction}>
-            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-              <TabList
-                onChange={handleChange}
-                aria-label="scrollable auto tabs example"
-                variant="scrollable"
-                scrollButtons="auto"
-              >
-                {Restrictions.map((r, i) => {
-                  return <Tab key={i} label={r.name} value={r.value} />;
-                })}
-              </TabList>
-            </Box>
-            {Restrictions.map((r, i) => {
-              let val = null;
-              if (countryData) {
-                for (let i = 0; i < countryData.length; i++) {
-                  if (countryData[i].policy_type_code === r.value) {
-                    val = countryData[i].policyvalue_actual;
-                    break;
-                  }
+          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+            <Tabs
+              onChange={handleChange}
+              aria-label="scrollable auto tabs example"
+              variant="scrollable"
+              scrollButtons
+              value={restriction}
+            >
+              {Restrictions.map((r, i) => (
+                <Tab key={i} label={r.name} value={r.value} />
+              ))}
+            </Tabs>
+          </Box>
+          {Restrictions.map((r, i) => {
+            let val = null;
+            if (countryData) {
+              for (let i = 0; i < countryData.length; i++) {
+                if (countryData[i].policy_type_code === r.value) {
+                  val = countryData[i].policyvalue_actual;
+                  break;
                 }
               }
+            }
 
-              return val != null ? (
-                <TabPanel key={i} value={r.value}>
-                  Sub-index score: <strong>{getIndicator(r.value, val)}</strong>
-                  . (Higher values indicates stricter policy) <br />
-                  <br />
-                  {getText(r.value, val)}
-                </TabPanel>
-              ) : null;
-            })}
-          </TabContext>
+            return val != null && r.value === restriction ? (
+              <Box key={i} value={r.value} m={3}>
+                Sub-index score: <strong>{getIndicator(r.value, val)}</strong>
+                . (Higher values indicates stricter policy) <br />
+                <br />
+                {getText(r.value, val)}
+              </Box>
+            ) : null;
+          })}
         </Box>
       )}
     </>
   );
-}
+};
+
+export default InfoTabs;

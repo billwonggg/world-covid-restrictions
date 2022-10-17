@@ -161,7 +161,7 @@ const InfoTabs = ({ countryName, date, countryData, restriction, setRestriction 
             }
 
             return val != null && r.value === restriction ? (
-              <Box key={i} value={r.value} mt={3}>
+              <Box key={i} value={r.value} m={3}>
                 Sub-index score: <strong>{getIndicator(r.value, val)}</strong>
                 . (Higher values indicates stricter policy) <br />
                 <br />

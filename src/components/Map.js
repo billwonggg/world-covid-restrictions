@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { MapContainer, GeoJSON, TileLayer, Popup } from "react-leaflet";
-import data from "../data/countries.json";
-import { Countries } from "../data/Countries";
-import Legend from "./Legend";
 import "leaflet/dist/leaflet.css";
+import React, { useEffect, useState } from "react";
+import { GeoJSON, MapContainer, Popup, TileLayer } from "react-leaflet";
+import { Countries } from "../data/Countries";
+import data from "../data/countries.json";
+import Legend from "./Legend";
 
 const Map = ({
   country,
@@ -98,70 +98,65 @@ const Map = ({
   // console.log(allCountryData);
   // console.log(countryData, "cd");
   return (
-    <>
-      <MapContainer
-        style={{ height: "55vh", width: "90vw", maxWidth: "2000px" }}
-        zoom={2}
-        center={[51.505, -0.09]}
-        whenCreated={setMap}
-      >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        {data.features.map((feature, i) => {
-          const ISO = feature.properties.ISO_A3;
-          const NAME = feature.properties.ADMIN;
-          let val = null;
-          if (country !== "" && countryData != null) {
-            // there is a selected country
-            for (let i = 0; i < countryData.length; i++) {
-              if (countryData[i].policy_type_code === restriction) {
-                val = idxToPerc(
-                  countryData[i].policy_type_code,
-                  countryData[i].policyvalue_actual
-                );
-              }
+    <MapContainer
+      style={{ height: "55vh", width: "90vw", maxWidth: "2000px" }}
+      zoom={2}
+      center={[51.505, -0.09]}
+      whenCreated={setMap}
+    >
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      {data.features.map((feature, i) => {
+        const ISO = feature.properties.ISO_A3;
+        const NAME = feature.properties.ADMIN;
+        let val = null;
+        if (country !== "" && countryData != null) {
+          // there is a selected country
+          for (let i = 0; i < countryData.length; i++) {
+            if (countryData[i].policy_type_code === restriction) {
+              val = idxToPerc(countryData[i].policy_type_code, countryData[i].policyvalue_actual);
             }
-          } else if (allCountryData && allCountryData[ISO]) {
-            val = allCountryData[ISO].stringency;
           }
-          const color = percToColor(val, ISO);
+        } else if (allCountryData && allCountryData[ISO]) {
+          val = allCountryData[ISO].stringency;
+        }
+        const color = percToColor(val, ISO);
 
-          return (
-            <GeoJSON
-              key={i}
-              style={{
-                fillColor: color,
-                weight: 1,
-                fillOpacity: 0.65,
-                color: "grey",
-              }}
-              data={feature}
-              eventHandlers={{
-                click: () => {
-                  if (country === ISO) {
-                    setCountryName("");
-                    setCountry("");
-                  } else {
-                    setCountryName(NAME);
-                    setCountry(ISO);
-                  }
-                },
-              }}
-            />
-          );
-        })}
-        {latlng && (
-          <Popup position={latlng}>
-            <strong>{countryName}</strong>
-            <br />
-            {countryData?.stringencyData?.confirmed}
-          </Popup>
-        )}
-        <Legend map={map} />
-      </MapContainer>
-    </>
+        return (
+          <GeoJSON
+            key={i}
+            style={{
+              fillColor: color,
+              weight: 1,
+              fillOpacity: 0.65,
+              color: "grey",
+            }}
+            data={feature}
+            eventHandlers={{
+              click: () => {
+                if (country === ISO) {
+                  setCountryName("");
+                  setCountry("");
+                } else {
+                  setCountryName(NAME);
+                  setCountry(ISO);
+                }
+              },
+            }}
+          />
+        );
+      })}
+      {latlng && (
+        <Popup position={latlng}>
+          <strong>{countryName}</strong>
+          <br />
+          {countryData?.stringencyData?.confirmed}
+        </Popup>
+      )}
+      <Legend map={map} />
+    </MapContainer>
   );
 };
 

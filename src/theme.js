@@ -1,5 +1,4 @@
 import { createTheme } from "@mui/material";
-import { indigo } from "@mui/material/colors";
 
 export const themeLight = createTheme({
   palette: {

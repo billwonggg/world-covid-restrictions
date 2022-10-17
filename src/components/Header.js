@@ -27,10 +27,10 @@ export default function Header({ country, setCountry, date, setDate, darkMode, s
     <AppBar position="static" height="200px" color="secondary">
       <Toolbar disableGutters>
         <Grid container justifyContent="space-evenly" alignItems="center">
-          <Grid item md={3} justifyContent="center" alignItems="center">
-            <h2>COVID-19 Restrictions Map</h2>
+          <Grid item md={4} justifyContent="center" alignItems="center">
+            <h2 style={{ marginLeft: "25px" }}>COVID-19 Restrictions Map</h2>
           </Grid>
-          <Grid item md={3}>
+          <Grid item md={2}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
                 openTo="year"
@@ -55,8 +55,8 @@ export default function Header({ country, setCountry, date, setDate, darkMode, s
                 label="Country"
                 value={country}
                 onChange={handleCountryChange}
-                sx={{ maxWidth: "400px" }}
-                MenuProps={{ PaperProps: { sx: { maxHeight: "30vh" } } }}
+                sx={{ maxWidth: "300px" }}
+                MenuProps={{ PaperProps: { sx: { maxHeight: "35vh" } } }}
               >
                 {Countries.map((c) => (
                   <MenuItem key={c.ISO_A3} value={c.ISO_A3}>

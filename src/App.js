@@ -28,10 +28,8 @@ const App = () => {
   const [allCountryData, setAllCountryData] = useState(null);
   // current date selected
   const [date, setDate] = useState(() => {
-    const day = new Date();
-    // we search up data 4 days ago
-    day.setDate(day.getDate() - 8);
-    return day.toLocaleDateString("en-CA");
+    const day = new Date("2022-02-09");
+    return day.toISOString().split("T")[0];
   });
 
   const handleWindowSizeChange = () => {

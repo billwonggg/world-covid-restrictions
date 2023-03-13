@@ -41,7 +41,7 @@ export default function Header({ country, setCountry, date, setDate, darkMode, s
                 value={date}
                 inputFormat="dd/MM/yyyy"
                 onChange={(newValue) => {
-                  setDate(newValue.toLocaleDateString("en-CA"));
+                  setDate(newValue.toISOString().split("T")[0]);
                 }}
                 renderInput={(params) => <TextField {...params} helperText={null} />}
               />

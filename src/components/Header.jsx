@@ -1,17 +1,10 @@
-import {
-  AppBar,
-  FormControl,
-  InputLabel,
-  Select,
-  Stack,
-  TextField,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { AppBar, FormControl, InputLabel, Select, Stack, TextField, Toolbar, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import MenuItem from "@mui/material/MenuItem";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import dayjs from "dayjs";
 import React from "react";
 import { Countries } from "../data/Countries";
 import ThemeSwitch from "./ThemeSwitch";
@@ -31,19 +24,14 @@ export default function Header({ country, setCountry, date, setDate, darkMode, s
             <h2 style={{ marginLeft: "25px" }}>COVID-19 Restrictions Map</h2>
           </Grid>
           <Grid item md={2}>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
-                openTo="year"
-                views={["year", "month", "day"]}
                 label="Date"
-                minDate={new Date("2020-01-01")}
-                maxDate={new Date()}
-                value={date}
-                inputFormat="dd/MM/yyyy"
-                onChange={(newValue) => {
-                  setDate(newValue.toISOString().split("T")[0]);
-                }}
-                renderInput={(params) => <TextField {...params} helperText={null} />}
+                minDate={dayjs("2020-01-01")}
+                maxDate={dayjs()}
+                format="DD/MM/YYYY"
+                value={dayjs(date)}
+                onChange={(newValue) => setDate(newValue.format("YYYY-MM-DD").toString())}
               />
             </LocalizationProvider>
           </Grid>

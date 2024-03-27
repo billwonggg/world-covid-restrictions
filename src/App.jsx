@@ -1,5 +1,6 @@
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import Box from "@mui/material/Box";
+import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import Description from "./components/Description";
@@ -27,10 +28,7 @@ const App = () => {
   // overall stringency data for the world
   const [allCountryData, setAllCountryData] = useState(null);
   // current date selected
-  const [date, setDate] = useState(() => {
-    const day = new Date("2022-02-09");
-    return day.toISOString().split("T")[0];
-  });
+  const [date, setDate] = useState(dayjs("2022-02-09").format("YYYY-MM-DD").toString());
 
   const handleWindowSizeChange = () => {
     setWidth(window.innerWidth);
@@ -48,9 +46,7 @@ const App = () => {
       return;
     }
     try {
-      const r = await fetch(
-        `https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/actions/${country}/${date}`
-      );
+      const r = await fetch(`https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/actions/${country}/${date}`);
       const data = await r.json();
       if (!r.ok) {
         throw new Error(data.error);
@@ -66,9 +62,7 @@ const App = () => {
       return;
     }
     try {
-      const r = await fetch(
-        `https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/date-range/${date}/${date}`
-      );
+      const r = await fetch(`https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/date-range/${date}/${date}`);
       if (!r.ok) {
         throw new Error(r.error);
       }

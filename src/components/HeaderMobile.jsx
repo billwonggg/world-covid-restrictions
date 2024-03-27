@@ -15,20 +15,14 @@ import {
   Typography,
 } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import React, { useState } from "react";
 import { Countries } from "../data/Countries";
 import ThemeSwitch from "./ThemeSwitch";
 
-export default function HeaderMobile({
-  country,
-  setCountry,
-  date,
-  setDate,
-  darkMode,
-  setDarkMode,
-}) {
+export default function HeaderMobile({ country, setCountry, date, setDate, darkMode, setDarkMode }) {
   const [open, setOpen] = useState(false);
   // set country ISO code when clicked
   const handleCountryChange = (event) => {
@@ -58,19 +52,14 @@ export default function HeaderMobile({
             </ListItem>
             <Divider sx={{ mt: 3 }} />
             <ListItem sx={{ mt: 3 }}>
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
-                  openTo="year"
-                  views={["year", "month", "day"]}
                   label="Date"
-                  minDate={new Date("2020-01-01")}
-                  maxDate={new Date()}
-                  value={date}
-                  inputFormat="dd/MM/yyyy"
-                  onChange={(newValue) => {
-                    setDate(newValue.toLocaleDateString("en-CA"));
-                  }}
-                  renderInput={(params) => <TextField {...params} helperText={null} />}
+                  minDate={dayjs("2020-01-01")}
+                  maxDate={dayjs()}
+                  format="DD/MM/YYYY"
+                  value={dayjs(date)}
+                  onChange={(newValue) => setDate(newValue.format("YYYY-MM-DD").toString())}
                 />
               </LocalizationProvider>
             </ListItem>

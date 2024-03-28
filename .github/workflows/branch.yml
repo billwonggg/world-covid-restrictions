@@ -1,12 +1,16 @@
-name: Firebase Continuous Deployment
+name: Build Check
 
 on:
   push:
     branches:
-      - "master"
+      - "*"
+      - "!master"
+  pull_request:
+    branches:
+      - "*"
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -22,10 +26,3 @@ jobs:
 
       - name: Build the Application
         run: npm run build
-
-      - name: Deployment
-        uses: w9jds/firebase-action@master
-        with:
-          args: deploy --only hosting
-        env:
-          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
